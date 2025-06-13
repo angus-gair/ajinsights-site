@@ -1,0 +1,22 @@
+Ayan Infotech urgently needs 4 Artificial Intelligence (AI) specialists for an initial 12-month contract. I can consider the contractor to be based in Melbourne, Sydney, Canberra or Brisbane.
+
+I can only consider Australian citizen for the following contracts!
+
+Our client is currently building an Agentic AI platform from scratch. Given that Agentic AI is relatively new, I can consider AI specialists with experience across Bedrock, Fabric or OpenAI.
+
+
+AI Technical Developer - Agentic Platform
+
+1-2 years of experience in software development or AI-related projects (internships or university projects included).
+Familiarity with Python and basic understanding of machine learning concepts. Interest in large language models, AI agents, and public sector use cases.
+Exposure to AWS or similar cloud platforms (e.g. using S3, Lambda, or API Gateway).
+Eagerness to learn new technologies, frameworks, and best practices in AI development. Strong problem-solving mindset, attention to detail, and collaborative team attitude. Actively seeks input from cross-functional teams, values diverse perspectives, and contributes to group problem-solving to achieve project objectives efficiently.
+Communicates complex technical concepts clearly to both technical and non-technical stakeholders, adapting messaging style as needed for different audiences.
+Welcomes feedback from colleagues, provides thoughtful input to others, and remains open to new ideas and approaches to improve AI solutions. Identifies potential project risks early, communicates them transparently to the team, and collaborates on developing effective mitigation strategies to ensure responsible AI development.
+Takes ownership of deliverables, adheres to ethical standards, and ensures transparency and fairness in AI systems, fostering trust within the team and with stakeholders
+Your qualifications should include:
+
+Bachelor's degree in computer science, Data Science, Software Engineering, or a related discipline (or working towards).
+Familiarity with agent frameworks like LangChain or prompt tuning libraries.
+Understanding of REST APIs, Git, and basic DevOps workflows.
+Coursework or project experience involving LLMs, NLP, or AI platforms.

@@ -2,10 +2,10 @@
 
 import type React from "react"
 
-import { useState } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Upload, FileText, X } from "lucide-react"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { FileText, Upload, X } from "lucide-react"
+import { useEffect, useState } from "react"
 
 interface SourceDocumentsStepProps {
   data: any
@@ -14,17 +14,71 @@ interface SourceDocumentsStepProps {
 }
 
 export default function SourceDocumentsStep({ data, onUpdate, onNext }: SourceDocumentsStepProps) {
-  const [uploadedFiles, setUploadedFiles] = useState<File[]>(data.sourceDocuments || [])
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([])
+  const [isClient, setIsClient] = useState(false)
+
+  // Ensure client-side hydration safety
+  useEffect(() => {
+    setIsClient(true)
+    // Initialize with data from parent, ensuring state sync
+    if (data.sourceDocuments && data.sourceDocuments.length > 0) {
+      setUploadedFiles(data.sourceDocuments)
+      console.log("📄 INITIALIZED WITH PARENT DATA:", data.sourceDocuments.length, "files")
+    }
+  }, [])
+
+  // Sync with parent data changes (but only if different)
+  useEffect(() => {
+    if (isClient && data.sourceDocuments &&
+      data.sourceDocuments.length !== uploadedFiles.length) {
+      console.log("📄 SYNCING WITH PARENT DATA:", data.sourceDocuments.length, "files")
+      setUploadedFiles(data.sourceDocuments)
+    }
+  }, [data.sourceDocuments, uploadedFiles.length, isClient])
+
+  // Diagnostic logging for source documents step
+  useEffect(() => {
+    console.log("📄 SOURCE DOCUMENTS STEP MOUNT - Initial Data:", data)
+    console.log("📄 SOURCE DOCUMENTS STEP MOUNT - Uploaded Files:", uploadedFiles)
+  }, [])
+
+  useEffect(() => {
+    console.log("📄 UPLOADED FILES STATE CHANGED:", uploadedFiles.length, "files")
+    uploadedFiles.forEach((file, index) => {
+      console.log(`📄 File ${index + 1}:`, file.name, formatFileSize(file.size))
+    })
+  }, [uploadedFiles])
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("📤 FILE UPLOAD TRIGGERED")
     const files = Array.from(event.target.files || [])
+    console.log("📤 NEW FILES SELECTED:", files.length, "files")
+
+    if (files.length === 0) {
+      console.warn("📤 NO FILES SELECTED")
+      return
+    }
+
     const newFiles = [...uploadedFiles, ...files]
+    console.log("📤 UPDATING STATE WITH:", newFiles.length, "total files")
+
+    // Update local state immediately
     setUploadedFiles(newFiles)
-    onUpdate({ sourceDocuments: newFiles })
+
+    // Update parent state with a small delay to ensure state is consistent
+    setTimeout(() => {
+      onUpdate({ sourceDocuments: newFiles })
+      console.log("📤 CALLED onUpdate with sourceDocuments:", newFiles.length, "files")
+    }, 0)
+
+    // Reset the input to allow re-uploading the same file
+    event.target.value = ''
   }
 
   const removeFile = (index: number) => {
+    console.log("🗑️ REMOVING FILE AT INDEX:", index)
     const newFiles = uploadedFiles.filter((_, i) => i !== index)
+    console.log("🗑️ NEW FILES ARRAY:", newFiles.length, "files remaining")
     setUploadedFiles(newFiles)
     onUpdate({ sourceDocuments: newFiles })
   }
@@ -72,6 +126,8 @@ export default function SourceDocumentsStep({ data, onUpdate, onNext }: SourceDo
               accept=".pdf,.doc,.docx,.txt"
               onChange={handleFileUpload}
               className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+              title="Upload resume documents"
+              aria-label="Upload resume documents"
             />
           </div>
         </CardContent>
@@ -139,7 +195,28 @@ export default function SourceDocumentsStep({ data, onUpdate, onNext }: SourceDo
 
       {/* Navigation */}
       <div className="flex justify-center">
-        <Button onClick={onNext} disabled={uploadedFiles.length === 0} size="lg">
+        <Button
+          onClick={() => {
+            console.log("🎯 CONTINUE BUTTON CLICKED - Files:", uploadedFiles.length)
+            console.log("🎯 FINAL STATE CHECK - Parent Data:", data.sourceDocuments?.length || 0)
+
+            if (uploadedFiles.length === 0) {
+              console.error("🚨 NO FILES TO CONTINUE WITH")
+              return
+            }
+
+            // Ensure parent state is up to date before proceeding
+            onUpdate({ sourceDocuments: uploadedFiles })
+
+            // Small delay to ensure state update is processed
+            setTimeout(() => {
+              console.log("🎯 CALLING onNext()")
+              onNext()
+            }, 100)
+          }}
+          disabled={uploadedFiles.length === 0}
+          size="lg"
+        >
           Continue to Configuration
           {uploadedFiles.length === 0 && <span className="ml-2 text-xs">(Upload at least one document)</span>}
         </Button>

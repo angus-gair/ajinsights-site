@@ -1,18 +1,18 @@
 "use client"
 
-import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 import Link from "next/link"
+import { useEffect, useState } from "react"
 
 // Step Components
-import JobDescriptionStep from "@/components/steps/job-description-step"
-import SourceDocumentsStep from "@/components/steps/source-documents-step"
 import ConfigurationStep from "@/components/steps/configuration-step"
-import GenerationStep from "@/components/steps/generation-step"
-import ReviewStep from "@/components/steps/review-step"
 import ExportStep from "@/components/steps/export-step"
+import GenerationStep from "@/components/steps/generation-step"
+import JobDescriptionStep from "@/components/steps/job-description-step"
+import ReviewStep from "@/components/steps/review-step"
+import SourceDocumentsStep from "@/components/steps/source-documents-step"
 
 // Types
 interface ResumeData {
@@ -40,29 +40,112 @@ const steps = [
 ]
 
 export default function CreateResumePage() {
+  const [isClient, setIsClient] = useState(false)
   const [currentStep, setCurrentStep] = useState(1)
   const [resumeData, setResumeData] = useState<ResumeData>({
     sourceDocuments: [],
     generationConfig: {},
   })
 
+  // Hydration-safe client-side rendering
+  useEffect(() => {
+    setIsClient(true)
+
+    // Restore state from sessionStorage if available
+    try {
+      const savedStep = sessionStorage.getItem('resumeCurrentStep')
+      const savedData = sessionStorage.getItem('resumeData')
+
+      if (savedStep) {
+        const step = parseInt(savedStep)
+        if (step >= 1 && step <= steps.length) {
+          setCurrentStep(step)
+          console.log("🔄 RESTORED STEP FROM SESSION:", step)
+        }
+      }
+
+      if (savedData) {
+        const data = JSON.parse(savedData)
+        setResumeData(data)
+        console.log("🔄 RESTORED DATA FROM SESSION:", data)
+      }
+    } catch (error) {
+      console.warn("⚠️ Failed to restore session data:", error)
+    }
+  }, [])
+
+  // Persist state to sessionStorage
+  useEffect(() => {
+    if (isClient) {
+      sessionStorage.setItem('resumeCurrentStep', currentStep.toString())
+      console.log("💾 SAVED STEP TO SESSION:", currentStep)
+    }
+  }, [currentStep, isClient])
+
+  useEffect(() => {
+    if (isClient) {
+      sessionStorage.setItem('resumeData', JSON.stringify(resumeData))
+      console.log("💾 SAVED DATA TO SESSION:", resumeData)
+    }
+  }, [resumeData, isClient])
+
+  // Diagnostic logging to track state changes
+  useEffect(() => {
+    console.log("🔄 CREATE PAGE MOUNT - Current Step:", currentStep)
+    console.log("📊 Resume Data on Mount:", resumeData)
+  }, [])
+
+  useEffect(() => {
+    console.log("🚀 STEP CHANGE - New Step:", currentStep)
+    console.log("📁 Source Documents Count:", resumeData.sourceDocuments?.length || 0)
+    console.log("⚙️ Configuration:", resumeData.generationConfig)
+  }, [currentStep])
+
   const progress = (currentStep / steps.length) * 100
   const CurrentStepComponent = steps[currentStep - 1].component
 
   const handleNext = () => {
+    console.log("⏭️ HANDLE NEXT - Current Step:", currentStep, "Next:", currentStep + 1)
     if (currentStep < steps.length) {
-      setCurrentStep(currentStep + 1)
+      const nextStep = currentStep + 1
+      setCurrentStep(nextStep)
+
+      // Validate progression requirements
+      if (nextStep === 3 && resumeData.sourceDocuments.length === 0) {
+        console.warn("🚨 ATTEMPTING TO SKIP TO CONFIG WITHOUT DOCUMENTS")
+        // Force back to source documents step
+        setCurrentStep(2)
+        return
+      }
     }
   }
 
   const handlePrevious = () => {
+    console.log("⏮️ HANDLE PREVIOUS - Current Step:", currentStep, "Previous:", currentStep - 1)
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1)
     }
   }
 
   const updateResumeData = (data: Partial<ResumeData>) => {
-    setResumeData((prev) => ({ ...prev, ...data }))
+    console.log("🔧 UPDATE RESUME DATA - New Data:", data)
+    setResumeData((prev) => {
+      const newData = { ...prev, ...data }
+      console.log("🔧 UPDATED RESUME DATA - Full State:", newData)
+      return newData
+    })
+  }
+
+  // Prevent hydration mismatch by not rendering until client-side
+  if (!isClient) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -99,9 +182,8 @@ export default function CreateResumePage() {
             {steps.map((step, index) => (
               <div key={step.id} className="flex flex-col items-center">
                 <div
-                  className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
-                    index + 1 <= currentStep ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-600"
-                  }`}
+                  className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${index + 1 <= currentStep ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-600"
+                    }`}
                 >
                   {index + 1}
                 </div>

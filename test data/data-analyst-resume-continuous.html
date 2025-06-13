@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Name - Senior Data Analyst</title>
+  
+  <!-- 
+    RESUME TEMPLATE GUIDELINES - CONTINUOUS VERSION
+    ===============================================
+ 
+    CUSTOMIZATION GUIDE:
+    1. Add/remove sections as needed
+    2. Keep bullet points between 80 to 150 words 
+    
+    LENGTH GUIDELINES:
+    - 1.5-2 pages equivalent
+    - between 700 to 1000 words
+ 
+  -->
+  
+  <style>
+    /* 
+      CSS VARIABLES - CUSTOMIZE THESE
+      ================================
+      Adjust these values to personalize your resume's appearance
+    */
+    :root {
+      --accent-color: #1565C0;  /* Primary accent color - change to your preference */
+      --accent-light: #E3F2FD;  /* Light accent for borders/backgrounds */
+      --font-family: 'Segoe UI', 'Open Sans', Arial, sans-serif;
+      --font-size-body: 10pt;
+      --font-size-small: 9pt;
+      --font-size-heading: 11pt;
+      --font-size-name: 28pt;
+      --font-weight-normal: 400;
+      --font-weight-bold: 600;
+      --line-height: 1.5;
+      --padding: 0.5in;
+      --spacing-xs: 2pt;
+      --spacing-small: 4pt;
+      --spacing-medium: 8pt;
+      --spacing-large: 16pt;
+      --bullet-char: '▸';  /* Bullet character - can change to •, -, etc */
+      --color-text: #212121;
+      --color-secondary: #424242;
+    }
+
+    /* Base styles - generally don't need to modify */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      color: var(--color-text);
+      font-weight: var(--font-weight-normal);
+      font-size: var(--font-size-body);
+      font-family: var(--font-family);
+      line-height: var(--line-height);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* 
+      PAGE LAYOUT - CONTINUOUS VERSION
+      ================================
+      No fixed height - content flows naturally.
+      Width remains Letter size for consistency.
+    */
+    .page {
+      padding: var(--padding);
+      width: 8.5in;
+      min-height: 11in;  /* Minimum height of one page */
+      background-color: white;
+      position: relative;
+    }
+
+    /* 
+      HEADER SECTION
+      ==============
+      Contains name, title, and contact information.
+      Keep this section concise to maximize space for content.
+    */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--spacing-medium);
+      padding-bottom: var(--spacing-medium);
+      border-bottom: 2px solid var(--accent-color);
+    }
+
+    .header-primary {
+      flex: 1;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: baseline;
+      gap: 1em;
+    }
+
+    /* Your name - make it prominent */
+    .full-name {
+      color: var(--accent-color);
+      font-weight: var(--font-weight-bold);
+      font-size: var(--font-size-name);
+      line-height: 1;
+    }
+
+    /* Professional title */
+    .title {
+      font-size: calc(var(--font-size-heading) + 2pt);
+      color: var(--color-secondary);
+      font-weight: var(--font-weight-normal);
+    }
+
+    /* Contact details - keep on one line if possible */
+    .contact-details {
+      display: flex;
+      gap: 1em;
+      font-size: var(--font-size-small);
+      color: var(--color-secondary);
+    }
+
+    .contact-details span:not(:last-child)::after {
+      content: '|';
+      margin-left: 1em;
+      color: #BDBDBD;
+    }
+
+    /* 
+      CONTENT LAYOUT
+      ==============
+      Two-column layout: main content (67%) and sidebar (30%)
+      Adjust the flex values if you need different proportions
+    */
+    .content {
+      display: flex;
+      gap: 3%;
+    }
+
+    .col-main {
+      flex: 0 0 67%;
+    }
+
+    .col-aside {
+      flex: 0 0 30%;
+    }
+
+    /* 
+      SECTION STYLES
+      ==============
+      Each major section (Experience, Projects, etc.)
+      No page-break rules in continuous version
+    */
+    .section {
+      margin-bottom: var(--spacing-large);
+    }
+
+    .section-title {
+      text-transform: uppercase;
+      color: var(--accent-color);
+      font-weight: var(--font-weight-bold);
+      font-size: var(--font-size-heading);
+      border-bottom: 1px solid var(--accent-light);
+      margin-bottom: var(--spacing-medium);
+      padding-bottom: 2pt;
+      letter-spacing: 0.5pt;
+    }
+
+    /* 
+      EXPERIENCE/PROJECT BLOCKS
+      ========================
+      Individual job or project entries
+    */
+    .block {
+      margin-bottom: var(--spacing-medium);
+    }
+
+    .block-heading {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .heading-primary {
+      font-weight: var(--font-weight-bold);
+      font-size: var(--font-size-heading);
+      color: var(--color-text);
+    }
+
+    .heading-secondary {
+      font-size: var(--font-size-body);
+      color: var(--color-secondary);
+      font-style: italic;
+    }
+
+    .heading-minor {
+      font-size: var(--font-size-small);
+      color: var(--color-secondary);
+    }
+
+    /* 
+      PROFESSIONAL SUMMARY
+      ===================
+      Keep to 2-3 lines. Focus on value proposition.
+    */
+    .professional-summary {
+      font-size: var(--font-size-body);
+      color: var(--color-text);
+      margin-bottom: var(--spacing-medium);
+      line-height: 1.6;
+    }
+
+    /* 
+      BULLET POINTS
+      *** Modify ***
+      =============
+     - Use metrics and action verbs WHEN POSSIBLE. Keep to 80 to 150 words.
+     - select based on role requirements
+     - In continuous version, no page-break restrictions.
+    */
+    ul {
+      list-style: none;
+      margin-left: 0;
+    }
+
+    li {
+      position: relative;
+      margin-bottom: var(--spacing-small);
+      padding-left: 16pt;
+      line-height: 1.4;
+    }
+
+    li:before {
+      content: var(--bullet-char);
+      position: absolute;
+      left: 0;
+      color: var(--accent-color);
+    }
+
+    /* 
+      SKILLS SECTION
+      ==============
+    - Organise by category for easy scanning
+    - Most relevant first
+    */
+    .skills-category {
+      margin-bottom: var(--spacing-medium);
+    }
+
+    .skill-category-title {
+      font-weight: var(--font-weight-bold);
+      font-size: var(--font-size-small);
+      color: var(--color-text);
+      margin-bottom: var(--spacing-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.3pt;
+    }
+
+    .skills-list {
+      font-size: var(--font-size-small);
+    }
+
+    .skills-list li {
+      margin-bottom: 2pt;
+      padding-left: 12pt;
+    }
+
+    /* 
+      PROJECT HEADERS
+      ===============
+      Include impact metrics prominently
+    */
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .project-impact {
+      font-size: var(--font-size-small);
+      color: var(--accent-color);
+      font-weight: var(--font-weight-bold);
+    }
+
+    /* Links */
+    a {
+      color: var(--accent-color);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* 
+      PRINT STYLES
+      ============
+      For continuous version, let content flow naturally when printing
+    */
+    @media print {
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      
+      .page {
+        width: 8.5in;
+        padding: 0.5in;
+        min-height: auto;
+      }
+    }
+
+    /* 
+      SCREEN STYLES
+      =============
+      For viewing on screen
+    */
+    @media screen {
+      body {
+        background-color: #f5f5f5;
+        display: flex;
+        justify-content: center;
+        padding: 2rem 0;
+      }
+      
+      .page {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        max-width: 8.5in;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 
+    CONTINUOUS PAGE LAYOUT
+    ======================
+    All content flows in one continuous document.
+    No page breaks - ideal for digital viewing.
+  -->
+  <div class="page">
+    <!-- HEADER -->
+    <div class="header">
+      <div class="header-primary">
+        <div class="header-content">
+          <span class="full-name">ANGUS JAMES</span> <!-- DO NOT CHANGE -->
+          <span class="title">Senior Data Analyst & Business Intelligence Leader</span> <!-- CAN MODIFY SLIGHTLY -->
+        </div>
+        <div class="contact-details"> <!-- DO NOT CHANGE -->
+          <span>Sydney / Canberra</span>
+          <span>(02) 8201-3710</span>
+          <span></span>
+          <span><a href="https://www.linkedin.com/in/yourprofile">linkedin.com/in/yourprofile</a></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="content">
+      <!-- Main Column (Left) -->
+      <div class="col-main">
+        <!-- 
+          PROFESSIONAL SUMMARY
+          ====================
+          2-3 lines highlighting your value proposition.
+          Include: Years of experience, key skills, industries, and unique value.
+        -->
+        <div class="section">
+          <div class="section-title">Professional Summary</div>
+          <div class="professional-summary">
+            [select the most appropriate from the resume.JSON file]
+          </div>
+        </div>
+
+        <!-- 
+          WORK EXPERIENCE
+          ===============
+          List in reverse chronological order.
+          Focus on achievements, not responsibilities.
+          Use metrics wherever possible.
+          
+          CONTINUOUS VERSION NOTE: 
+          You can include more positions since there's no page limit.
+          Consider showing career progression through 5-7 roles if relevant.
+        -->
+        <div class="section">
+          <div class="section-title">Professional Experience</div>
+          
+          <!-- Job 1 - Most Recent -->
+          <div class="block">
+            <div class="block-heading">
+              <span class="heading-primary">Company Name</span>
+              <span class="heading-minor">Month Year - Present</span>
+            </div>
+            <div class="heading-secondary">Your Job Title</div>
+            <ul>
+              <li>[select best fitting from resume.json]</li>
+              <li>[select best fitting from resume.json]</li>
+              <li>[select best fitting from resume.json]</li>
+              <li>[select best fitting from resume.json]</li>
+              <li>[select best fitting from resume.json]</li>
+            </ul>
+          </div>
+
+          <!-- Job 2 -->
+          <div class="block">
+            <div class="block-heading">
+              <span class="heading-primary">Previous Company</span>
+              <span class="heading-minor">Month Year - Month Year</span>
+            </div>
+            <div class="heading-secondary">Previous Job Title</div>
+            <ul>
+              <li>[select best fitting from resume.json]</li>
+              <li>[select best fitting from resume.json]</li>
+              <li>[select best fitting from resume.json]</li>
+              <li>[select best fitting from resume.json]</li>
+            </ul>
+          </div>
+
+          <!-- Job 3 -->
+          <div class="block">
+            <div class="block-heading">
+              <span class="heading-primary">Earlier Company</span>
+              <span class="heading-minor">Month Year - Month Year</span>
+            </div>
+            <div class="heading-secondary">Earlier Job Title</div>
+            <ul>
+              <li>[select best fitting from resume.json]</li>
+              <li>[select best fitting from resume.json]</li>
+              <li>[select best fitting from resume.json]</li>
+              <li>[select best fitting from resume.json]</li>
+            </ul>
+          </div>
+
+          <!-- Add more positions as needed -->
+        </div>
+
+        <!-- 
+          KEY PROJECTS & ACHIEVEMENTS
+          ===========================
+          Highlight 3-5 major projects with clear impact metrics.
+          In continuous version, you have space for more detail.
+        -->
+        <div class="section">
+          <div class="section-title">Major Projects & Achievements</div>
+          
+          <div class="block">
+            <div class="project-header">
+              <span class="heading-primary">Project Name/Type</span>
+              <span class="project-impact">$XXM Impact • Key Metric</span>
+            </div>
+            <ul>
+              <li>Context: What was the business problem or opportunity?</li>
+              <li>Action: What specific approach/technology did you use?</li>
+              <li>Result: What was the measurable outcome?</li>
+              <li>Skills: Highlight key technical skills demonstrated</li>
+            </ul>
+          </div>
+
+          <div class="block">
+            <div class="project-header">
+              <span class="heading-primary">Another Major Project</span>
+              <span class="project-impact">XX% Improvement • Time Saved</span>
+            </div>
+            <ul>
+              <li>Describe the challenge and your unique approach</li>
+              <li>Emphasize innovation and problem-solving skills</li>
+              <li>Include stakeholder impact and adoption metrics</li>
+              <li>Note any recognition or expanded implementation</li>
+            </ul>
+          </div>
+
+          <!-- Add more projects as space allows -->
+        </div>
+      </div>
+
+      <!-- Sidebar (Right) -->
+      <div class="col-aside">
+        <!-- 
+          TECHNICAL SKILLS
+          ================
+          Group by category for easy scanning.
+          List most relevant/impressive skills first.
+          In continuous version, can be more comprehensive.
+        -->
+        <div class="section">
+          <div class="section-title">Technical Expertise</div>
+          
+          <div class="skills-category">
+            <div class="skill-category-title">Data Analysis & SQL</div>
+            <ul class="skills-list">
+              <li>Advanced SQL (scale/complexity)</li>
+              <li>Database platforms used</li>
+              <li>Data Pipeline Architecture</li>
+              <li>ETL/ELT processes</li>
+              <li>Query optimization</li>
+              <li>Data modeling</li>
+            </ul>
+          </div>
+
+          <div class="skills-category">
+            <div class="skill-category-title">Programming & Analytics</div>
+            <ul class="skills-list">
+              <li>Python (pandas, NumPy, scikit-learn)</li>
+              <li>R (if applicable)</li>
+              <li>Statistical analysis</li>
+              <li>Machine Learning</li>
+              <li>Git/version control</li>
+              <li>API development</li>
+            </ul>
+          </div>
+
+          <div class="skills-category">
+            <div class="skill-category-title">Business Intelligence</div>
+            <ul class="skills-list">
+              <li>Tableau (certification level)</li>
+              <li>Power BI</li>
+              <li>Dashboard development</li>
+              <li>KPI frameworks</li>
+              <li>Report automation</li>
+              <li>Data storytelling</li>
+            </ul>
+          </div>
+
+          <div class="skills-category">
+            <div class="skill-category-title">Cloud & Infrastructure</div>
+            <ul class="skills-list">
+              <li>AWS/GCP/Azure services</li>
+              <li>Cloud data warehouses</li>
+              <li>Big data tools</li>
+              <li>Container technologies</li>
+              <li>Infrastructure as Code</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 
+          LEADERSHIP & SOFT SKILLS
+          ========================
+          Important for senior roles
+        -->
+        <div class="section">
+          <div class="section-title">Leadership & Business</div>
+          <ul class="skills-list">
+            <li>Strategic planning</li>
+            <li>Stakeholder management</li>
+            <li>Team leadership</li>
+            <li>Project management</li>
+            <li>Business development</li>
+            <li>Change management</li>
+            <li>Technical communication</li>
+            <li>Mentorship</li>
+          </ul>
+        </div>
+
+        <!-- 
+          EDUCATION
+          =========
+          Include degree, university, and relevant details
+        -->
+        <div class="section">
+          <div class="section-title">Education</div>
+          <div class="block">
+            <div class="heading-primary">Degree Name</div>
+            <div class="heading-secondary">University Name</div>
+            <div class="heading-minor">Major/Focus Area • Year</div>
+          </div>
+          <!-- Add additional degrees if applicable -->
+        </div>
+
+        <!-- 
+          CERTIFICATIONS
+          ==============
+          List relevant professional certifications
+        -->
+        <div class="section">
+          <div class="section-title">Certifications</div>
+          <div class="block">
+            <div class="heading-primary">Certification Name</div>
+            <div class="heading-minor">Issuing Organization • Year</div>
+          </div>
+          <div class="block">
+            <div class="heading-primary">Another Certification</div>
+            <div class="heading-minor">Organization • Year</div>
+          </div>
+          <!-- Add more as needed -->
+        </div>
+
+        <!-- 
+          INDUSTRY EXPERIENCE (OPTIONAL)
+          ==============================
+          Useful if you've worked across multiple industries
+        -->
+        <div class="section">
+          <div class="section-title">Industry Experience</div>
+          <div class="skills-category">
+            <div class="skill-category-title">Industry Sector 1</div>
+            <ul class="skills-list">
+              <li>Companies worked with</li>
+              <li>Domain expertise</li>
+              <li>Key projects/impacts</li>
+            </ul>
+          </div>
+          <div class="skills-category">
+            <div class="skill-category-title">Industry Sector 2</div>
+            <ul class="skills-list">
+              <li>Relevant experience</li>
+              <li>Industry-specific skills</li>
+              <li>Regulatory knowledge</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 
+          ADDITIONAL SECTIONS (OPTIONAL)
+          ==============================
+          Choose what's most relevant:
+          - Awards & Recognition
+          - Publications/Presentations
+          - Professional Memberships
+          - Volunteer Work
+          - Languages
+        -->
+      </div>
+    </div>
+  </div>
+</body>
+</html>

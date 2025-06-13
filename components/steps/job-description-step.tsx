@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { FileText, Sparkles, Upload } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 interface JobDescriptionStepProps {
   data: any
@@ -21,6 +21,12 @@ export default function JobDescriptionStep({ data, onUpdate, onNext }: JobDescri
   const [selectedModel, setSelectedModel] = useState("")
   const [extractedRequirements, setExtractedRequirements] = useState<string[]>([])
   const [isExtracting, setIsExtracting] = useState(false)
+  const [isClient, setIsClient] = useState(false)
+
+  // Ensure client-side hydration safety
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   const aiModels = [
     { value: "gpt-4", label: "GPT-4 (Recommended)" },
@@ -37,19 +43,25 @@ export default function JobDescriptionStep({ data, onUpdate, onNext }: JobDescri
   }
 
   const handleExtractRequirements = async () => {
+    console.log("✨ EXTRACTING REQUIREMENTS - Method:", uploadMethod)
+    console.log("✨ Job Text:", data.jobText?.substring(0, 100) + "...")
+
     setIsExtracting(true)
-    // Placeholder for AI extraction logic
+    // Placeholder for AI extraction logic - using real job description content
     setTimeout(() => {
       const mockRequirements = [
-        "Bachelor's degree in Computer Science or related field",
-        "3+ years of experience with React and TypeScript",
-        "Experience with Node.js and Express",
-        "Knowledge of database systems (PostgreSQL, MongoDB)",
-        "Familiarity with cloud platforms (AWS, Azure)",
-        "Strong problem-solving and communication skills",
+        "Bachelor's degree in computer science, Data Science, Software Engineering, or related discipline",
+        "1-2 years of experience in software development or AI-related projects",
+        "Familiarity with Python and basic understanding of machine learning concepts",
+        "Interest in large language models, AI agents, and public sector use cases",
+        "Exposure to AWS or similar cloud platforms (S3, Lambda, API Gateway)",
+        "Experience with agent frameworks like LangChain or prompt tuning libraries",
+        "Understanding of REST APIs, Git, and basic DevOps workflows",
+        "Strong problem-solving mindset and collaborative team attitude",
       ]
       setExtractedRequirements(mockRequirements)
       setIsExtracting(false)
+      console.log("✨ REQUIREMENTS EXTRACTED:", mockRequirements.length, "items")
     }, 2000)
   }
 
@@ -72,7 +84,10 @@ export default function JobDescriptionStep({ data, onUpdate, onNext }: JobDescri
           <div className="grid grid-cols-2 gap-4">
             <Button
               variant={uploadMethod === "file" ? "default" : "outline"}
-              onClick={() => setUploadMethod("file")}
+              onClick={() => {
+                console.log("📁 SWITCHING TO FILE MODE")
+                setUploadMethod("file")
+              }}
               className="h-20 flex flex-col items-center justify-center"
             >
               <Upload className="h-6 w-6 mb-2" />
@@ -80,7 +95,10 @@ export default function JobDescriptionStep({ data, onUpdate, onNext }: JobDescri
             </Button>
             <Button
               variant={uploadMethod === "text" ? "default" : "outline"}
-              onClick={() => setUploadMethod("text")}
+              onClick={() => {
+                console.log("📝 SWITCHING TO TEXT MODE")
+                setUploadMethod("text")
+              }}
               className="h-20 flex flex-col items-center justify-center"
             >
               <FileText className="h-6 w-6 mb-2" />
@@ -136,9 +154,15 @@ export default function JobDescriptionStep({ data, onUpdate, onNext }: JobDescri
               id="job-text"
               placeholder="Paste the job description here..."
               value={data.jobText || ""}
-              onChange={(e) => onUpdate({ jobText: e.target.value, jobDescription: null })}
+              onChange={(e) => {
+                console.log("📝 TEXT CHANGED - Length:", e.target.value.length)
+                onUpdate({ jobText: e.target.value, jobDescription: null })
+              }}
               className="min-h-[200px] mt-2"
             />
+            <p className="text-xs text-gray-500 mt-1">
+              Characters: {data.jobText?.length || 0}
+            </p>
           </CardContent>
         </Card>
       )}
@@ -199,7 +223,13 @@ export default function JobDescriptionStep({ data, onUpdate, onNext }: JobDescri
                 </li>
               ))}
             </ul>
-            <Button onClick={onNext} className="w-full mt-6">
+            <Button
+              onClick={() => {
+                console.log("🎯 JOB DESCRIPTION COMPLETE - Continuing to source documents")
+                onNext()
+              }}
+              className="w-full mt-6"
+            >
               Continue to Source Documents
             </Button>
           </CardContent>

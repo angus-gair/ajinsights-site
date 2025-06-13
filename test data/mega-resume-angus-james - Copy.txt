@@ -1,0 +1,322 @@
+# ANGUS JAMES
+
+Sydney, NSW | (02) 8201 3710 | angus@AJinsights.com.au | [LinkedIn](http://linkedin.com/in/angus-james) | [Website](https://www.AJinsights.com.au)
+
+## PROFILE SUMMARY
+
+With a strong background in data and analytics across finance, government, and retail sectors, I've built expertise in transforming complex datasets into clear insights that drive business decisions. My core strengths lie in developing robust data pipelines, creating predictive models, and implementing automated reporting solutions that connect technical implementation with business outcomes. My experience spans multiple industries including Banking (HSBC, AMEX), FMCG (Woolworths, Domino's Pizza), Media, FinTech, and Political Analytics, providing me with versatile perspectives to approach data challenges.
+
+### VALUE ADDITION
+
+1. **Analytics Expertise**  
+   My background is in analytics—statistics and data science with a focus on predictive modelling. Beyond IT and data skills, I bring deep analytical thinking capabilities.
+2. **Consulting Experience**  
+   I have worked with a wide range of clients in a consulting role (Equifax and MediaCom). A standout achievement was leading the Domino's France Project, where I delivered results in person alongside the business consultant.
+3. **Diverse Industry Knowledge**  
+   My experience spans Banking (HSBC, AMEX), FMCG (Woolworths, Domino's Pizza), Media (Marketing & Advertising analysis), FinTech (Prospa and SocietyOne), and Political Analytics (Australian Labor Party).
+4. **Large Dataset Expertise**  
+   I've successfully worked with transaction-level data from Domino's Pizza, Mastercard & HSBC, and individual-level data from Equifax Credit Bureau.
+
+## CORE COMPETENCIES
+
+- **Data Analysis & BI:** Advanced SQL, Power BI, Tableau, Python, DAX and PowerQuery M
+- **Forecasting & Predictive Modelling:** Propensity models, trend analyses, machine learning algorithms including GLMs, Gradient Boosted Machines, and clustering techniques
+- **Stakeholder Engagement:** Requirements gathering, user story development, cross-department collaboration
+- **Reporting & Visualisation:** Building dashboards, automated reports, KPI frameworks
+- **Project Delivery & Agile:** JIRA, Confluence, CI/CD principles, GIT-based version control
+- **Data Quality & Governance:** Validation, reconciliation, and integrity checks in large-scale EDW environments
+- **Communication & Documentation:** Translating technical concepts for non-technical audiences; process formalisation
+- **Geographic Information Systems:** Experience with geo-spatial data integration, G-NAF datasets, and visualization at granular geographic levels
+
+## WORK EXPERIENCE
+
+### **AJ Insights | Analytics Start-up**
+**Founder and Developer** | **Dec 2024 -- Current**
+
+*Established AJ Insights, with the aspiration of starting my own analytics company, an integrated digital platform empowering micro and small businesses through enterprise-grade analytics and streamlined digital operations, delivered via an intuitive subscription-based service.*
+
+**Key features include:**
+
+- **Full-stack development** integrating front-end and back-end systems (PostgreSQL, MySQL, Python, React, GraphQL)
+- **MVP Analytics Engine** using Python, Pandas, TensorFlow for advanced data analysis and predictive modelling
+- Designed and implemented advanced API integration architecture utilizing RESTful and GraphQL interfaces to connect client-facing ReactJS/NextJS applications with SuiteCRM backend systems, incorporating JWT authentication, rate limiting, and API Gateway orchestration that enabled seamless data flow between multiple services including SMS/Email gateways, analytics platforms, and AI processing systems
+- **AI-driven functionalities** utilizing Anthropic AI, LangChain, and OpenAI API to enable automated content generation for marketing and customer engagement & business reporting and analytics
+- **GitHub & Documentation** Full version control and release documentation using Git/GitHub; structured READMEs, architecture diagrams, and project wikis
+- **Geo-spatial Data Integration:** Developed a personal SQL server integrating G-NAF data from data.gov.au with ABS demographics, creating visual dashboards of Australia at Meshblock level (more granular than postcode)
+
+### **WooliesX**
+**Senior Performance & Optimisation Analyst** | **Apr 2024 -- Dec 2024**
+
+- **Developed Performance Optimisation Frameworks:** Led the creation of performance frameworks for Loyalty Rewards, incorporating budget optimisation tools and strategic initiatives such as a customer retention model. Managed stakeholder communications and maintained detailed documentation throughout the process.
+- **Data Pipeline and ETL Development:** Played a pivotal role in the Media Mix Model project for BIGW, enhancing the data model from national to individual-level granularity. Led the project end-to-end, from proposing the solution and building the data framework to executing and delivering the final data model to the client.
+- **Insights-Driven Projects Using Machine Learning:** Led projects to optimise customer targeting strategies, using machine learning to develop unique segments and propensity models, significantly improving response rates for marketing campaigns.
+- **Cross-Functional Collaboration:** Worked closely with strategy, marketing, product, and data engineering teams to align on performance metrics, ensuring comprehensive and cohesive data reporting processes.
+- **Business Impact Assessment:** Evaluated implementation of nationwide automated rostering system that eliminated approximately 88 hours of administrative work per store weekly across 1,000+ locations.
+
+#### **Key Projects:**
+
+- **BWS Member-Match-Maker (MMM) Decision-Engine Review:** Conducted a comprehensive health check and investment review of the BWS Member-Match-Maker decision engine, analyzing 14 months of campaign activity across 5.8M members and 1.1M redemptions. Identified that redemption baskets grew 3.27× faster than control baskets, with redeemers shopping every 1.45 weeks vs 1.67 weeks for non-redeemers. Analysis confirmed £41.5M incremental revenue, leading to approval for continued investment and expansion of high-propensity offer pools.
+
+- **Big W Rewards "Active Member" Redefinition:** Analyzed shopping-cycle behavior for 10M+ Big W loyalty members and discovered that 82% of transactions occur within 8 weeks (vs 99% within 8 weeks for Woolworths Supermarkets). Built a sensitivity-analysis framework quantifying changes in visit frequency, basket size, and AOV under multiple qualifying-window scenarios. Recommended and received executive sign-off for a refined 12-week definition with refreshed segmentation schema that delivers more actionable audiences for lifecycle marketing.
+
+- **Marketing Mix Modeling Pipeline – Retail Loyalty Program:** Engineered a robust, end-to-end data analytics pipeline supporting the loyalty program. Designed and implemented a scalable ETL solution integrating diverse data sources including transactions, customer profiles, campaign data, and TV market information. Created modular data framework with clearly defined base, staging, and output tables, supporting complex aggregations and time-based comparisons.
+
+- **Retail Loyalty Program Analytics – BIGW:** Delivered a comprehensive analytics platform enabling data-driven marketing and customer engagement optimization. Built a modular analytics framework capable of processing over 170 million transactions, supporting granular analysis at store, postcode, and segment level. Created interactive dashboards providing actionable insights on customer loyalty, campaign ROI, and subscription program growth.
+
+- **Points Cost Forecast System – BigW:** Led development of an enterprise-scale forecast system tracking $52.3M in annual loyalty program costs across different business categories. Designed comprehensive ETL pipeline in BigQuery SQL and architected a multi-dimensional data model for analysis across business units, time periods, and campaign streams. Developed sophisticated forecasting algorithms achieving 97.8% accuracy and created executive-level dashboards with drill-down analysis capabilities.
+
+- **Big W Stanhope Gardens Store Performance Diagnostic:** Audited first 11 weeks of trading for a new store using BigQuery SQL, Python, and Tableau. Diagnosed weak loyalty activation as chief commercial gap with member share six points lower than peers. Built a sensitivity framework linking Google-review improvements and member sign-ups to revenue, revealing that every 0.5-star review improvement delivered an additional 1-2% to weekly sales. Recommendations led to improved member sign-ups and Google rating within six weeks.
+
+### **Sydney Trains**
+**Senior Data Analyst -- *Contract*** | **Jun 2021 -- December 2023**
+
+- **Power BI:** Developed enterprise KPI dashboards providing a single source of truth for executives, reconciling $70M payroll data.
+- **DAX:** Implemented data‑quality checks and 80+ DAX measures, cutting reporting run‑time by 60%.
+- **Developed comprehensive SQL codebase** and data model to enhance Workforce Planning and Analysis by accurately applying pay rules to scheduling and rostering data for Sydney Trains Crew, offering detailed cost insights and enabling data-driven decision-making. This tool facilitates granular visibility into wage payments, penalties, and entitlements and supports scenario modelling and operational cost management, reducing overhead costs by 5%.
+- **Stakeholder Management & Documentation:** Worked closely with Payroll and Train Crew Workforce Planning to capture and document previously unrecorded systems and methodologies, transitioning vital, manually implemented knowledge into formal, automated procedures.
+- **Advanced Analytics & Machine Learning:** Built a Machine Learning model to analyse and mitigate excess dwell time at stations, enhancing train punctuality and customer experience. Developed passenger prediction model to assess the impacts of external factors on patronage, uncovering an additional 4.5 million passengers during non-operational Opal card readers.
+- **Passenger Weight Predictions:** Developed machine learning model to predict actual passenger numbers based on Waratah train weights, particularly valuable during fare-free travel periods during Protected Industrial Action in 2022. Created comprehensive Git repository documenting data ingestion, modeling procedures, and code versioning.
+- **Methodology Documentation:** Built comprehensive Git repository documenting data ingestion, modeling procedures, and code versioning for train weight passenger prediction model.
+- **Data Accuracy and Validation:** Reconciled new wage calculations with actual payroll data, verified line items on payslips to two-decimal precision, addressed front- and back-end discrepancies, and validated $70M in wages across two fortnightly runs—resolving or justifying all variances.
+- Pioneered adoption of analytical tools by leveraging complex SQL queries, streamlining payroll data extraction for 1,400 staff, enhancing accuracy, and ensuring compliance. Utilized R, Python, and SQL for technical research, stakeholder collaboration, machine learning model creation, and financial enhancement through Domo reporting.
+- Leveraged data-driven responses to align team goals with company objectives, employing strategic presentations to C-level stakeholders, fostering synergy between data insights and overarching business strategies such as risk assurance and governance.
+- Engineered automated reporting systems, significantly enhancing C-level visibility, cost reduction, rapid problem area identification, and bolstering quality assurance standards. Presented detailed reports to C-level stakeholders, employing data-driven insights to align team objectives with company goals.
+
+#### Project: PCM - Productivity Costing Model
+- **Description:** By analyzing operational changes and decisions at each layer, the model offers an end-to-end view of cost accrual, providing insights not necessarily available in existing payroll functions or reports. It delivers a holistic and detailed look at when and where individual costs are incurred, enabling greater transparency around timetable decisions and associated servicing.
+- **Scope:**
+  - Staff: ~1,400 drivers and guards
+  - Data Points: Wage payments, penalties, entitlements per Enterprise Agreement
+- **Deliverables:** An end-to-end reporting tool capable of costing different layers of scheduling and rostering for Sydney Trains train crewing.
+- **Data Model:**
+  - Master (6–12-month View)
+  - DWTT (6-week View)
+  - Period (2-week)
+  - Daily (1-day)
+  - Actual (Costed by Payroll)
+- **Considerations:** Wage, Absences, Allowances, Mileage, Penalties, Public Holidays, Minimum Shift Length
+- **Impact:** In FY21 (June–December), about $15 million (~7% of total driver/guard labour costs) were related to excess shifts and extended hours.
+- **Challenges:**
+  - Over 130 pages of Enterprise Agreement conditions led to ~80 coded pay rules
+  - Interaction between various entitlements (shift swaps, OTB—excess shift, WOBOD)
+  - Multiple shifts, sometimes not tracked in front-end data
+  - Discrepancies between front-end and back-end systems
+  - Unofficial swaps and manual changes not captured systematically
+
+### **Woolworths Group**
+**Senior Tableau Developer -- *Contract*** | **Jun 2020 - Jun 2021**
+
+*Worked within the Post Implementation Review Dashboard where Woolworths were implementing a national rollout of an automated rostering system. The purpose of this was to reduce the time that Department Managers spent completing rosters for their team. Also assisted with the re-build of the store Planning and Performance Dashboard used by hundreds of users per day as the most used dashboard within Retail Analytics.*
+
+- **Post Implementation Review and Planning and Performance Dashboards**, integrating datasets, developing models, and automated data refreshes via Google Cloud. This role involved maintaining data integrity & dashboard stability, which enabled informed program rollout decisions and continuous enhancements to the auto-scheduler.
+- **Power BI:** Re‑built the Planning & Performance dashboard in Power BI, serving 300+ users daily across 1,000+ stores.
+- **Analytics and Insights:** For two major projects, Post Implementation Review Dashboard and the Planning and Performance Dashboard, where I collected data from various systems, build data models, managed ongoing refreshes of data in an automated fashion (Google Cloud) and built and maintained dashboard reports. Maintained data integrity and stable dashboard performance which allowed key decisions to be made regarding program rollout, leading to continual improvement of auto schedulers and rostering efficiency.
+- **Stakeholder Management:** Assisted store managers, group managers and program stakeholders with use of the Post Implementation Review Dashboard in each of their unique levels and needs. By maintaining a strong understanding of what each party needed out of this dashboard, I was able to optimise the dashboard as a source of truth for program performance that was consumed by all key decision makers within the project team.
+- **Data Schema Design:** Translated end-user requirements into data schema designs for Data Developers, facilitating visualization of store rosters and labor demand patterns.
+- **Optimization Impact:** Implemented historical data comparisons with major events calendar that enhanced Year-over-Year performance analysis, enabling more accurate sales and wage forecasts.
+- **Management:** Managed end-to-end processes from data definitions and collection, ETL process and data models through to building and creating the dashboard reports and insights.
+- **Improvement:** Incorporated historical data with the Planning and Performance Dashboard so stores could compare YoY performance, which included building and incorporating a major events calendar. The impact of these comparisons and event impact analysis was well received by stakeholders and allowed for accurate forecasts for sales and wages.
+
+#### Project: Post Implementation Review (Automated Rostering)
+- **Description:** Woolworths implemented a nationwide automated rostering system. Department managers typically spent ~8 hours a week doing rosters, and with 11 departments per store (88 hours per store weekly) and over 1,000 Woolworths stores nationwide, the objective was to reduce this administrative workload.
+- **Dashboard Purpose:** Evaluate the effectiveness of the auto-scheduler in matching published rosters to forecast labour demand.
+- **Granularity:**
+  - **Store Manager:** Breakdown by department, day, hour (identifying where manual intervention was needed)
+  - **Group Managers:** Responsible for multiple sites, needed a store-by-store breakdown
+  - **Program Stakeholders:** Executive-level stakeholders needed overall progress updates on the rollout
+- **Outcome:** The dashboard became the "source of truth" for program performance, informing decisions made by key stakeholders.
+
+### **Prospa**
+**Business Intelligence Analyst- *Contract*** | **Dec 2019 - Apr 2020**
+
+*A financial technology company (FinTech), BI Analysts support driving the business to be data and outcome focuses. The BI Analysts set up measurement of experiments, analyse trends and segments, define KPIs and present their findings to a wide range of stakeholders. They support data driven thinking and action in organisation.*
+
+- Implemented data-driven strategies that optimised business performance, leading to a **15% increase** in revenue and a **10% reduction** in operating costs.
+- Conducted experiments to analyse customer behaviour and trends, identifying key market segments and developing targeted marketing campaigns.
+- **Analytics and Metric Creation:** In this role, I proactively engaged with senior stakeholders across the business to ensure I held a strong understanding of key business drivers that drove outcomes centered around producing high quality and fit-for-purposes data assets and reports to inform strategy and decision making.
+- **Insights:** This position required me to transform data into data models and visualisations that could be maintained, utilised and understood across the board. I developed dashboards and scenario modelling with Tableau across marketing, operations, sales and finance to optimise all C-Suite areas of the business.
+- **Technical Environment:** Utilized Snowflake, Databricks (Hive SQL and Python), and Azure Cloud Services within CI/CD pipelines for multiple daily production changes.
+- **Financial Models:** Developed analytical frameworks for amortization of one-off fees and default rate monitoring in the small business lending sector.
+- **Agile:** I worked in an agile environment with CI/CD pipelines that supported the BI Analyst and Data Engineers in making multiple production changes per day to the DWH and microservices.
+
+**Primary Tech Stack**: Used Snowflake, Databricks (Hive SQL and Python), Tableau and airflow built upon Azure Cloud Services.
+
+### **Mastercard**
+**Analytics and Tableau Consultant -- *Contract*** | **Aug 2019 - Dec 2019**
+
+- Developed and executed a comprehensive data analysis strategy, identifying key customer segments and achieving a **15% increase in customer retention.**
+- **Data Migration:** While working as part of this team, we held a specific focus on building and verifying analytics reports and dashboards for client deliverables. There was a strong emphasis on data accuracy, including performing regression testing to ensure consistency between data models.
+- **Campaign Analysis:** Performed post-campaign analysis to provide insights that increased incremental engagement and optimised campaigns to improve loyalty redemptions. I transformed analytical output into actionable insights and presented these recommendations to internal stakeholders.
+- **Analytics:** Responded to ad-hoc analytical requests from internal stakeholders.
+
+### **Equifax**
+**Data Scientist (Client Analytics -- Behavioural)** | **Sep 2016 - Aug 2019**
+
+*This is a global information solutions company that uses unique data, innovative analytics, technology and industry expertise to power organisations and individuals around the world. This included transforming knowledge into insights that helped make more informed and strategic business decisions.*
+
+**Machine Learning and Advanced Analytical Methods:** Worked independently on complex and demanding projects to provide data driven solutions that maximised marketing efficiency, market analysis, data enhancement and integration, external data supply, demographic marketing and the development of segmentation tools and sophisticated statistical models.
+
+**Analytics Project Delivery -- Consultation and Solution Design:** Coordinated end-to-end project delivery from internal client meetings to discuss business needs and developing analytical methodology through to managing project scope and the creation of project workflow. This was followed by project execution, resource management and deadline maintenance that ensured each project was delivered on time with findings presented to clients and stakeholders.
+
+**Statistical Model Building:** Developed predictive models for clients such as predicting revenue for potential new store locations for Dominos Pizza, recommending the top 20 new branch locations for HSBC, predicting voter intentions for Australian Labor Party and identifying key issues that influenced voter behaviour.
+
+**ACTU Voter Analysis:** Created 13 predictive models identifying voter intention (ALP, LNP, One Nation, etc.) and influential issues for each individual (climate change, economic management, immigration, etc.) for Australian Labor Party targeting, achieving up to 3.9x performance uplift verified through live telephone polling. Organized junior analysts in collating data from various sources (Phone Polling responses, Household geo-demographic data, Past Year polling data) into a single table for model building, with rigorous Quality Control (QC) to ensure data accuracy.
+
+**International Expansion:** Successfully adapted the Domino's store location model framework for international markets including New Zealand, Netherlands, and France.
+
+**Financial Services Modeling:** Built propensity models for American Express Platinum Cards that achieved 1.8x uplift over previous direct mailing campaigns.
+
+**Data and Statistical Analysis:** Assessed, cleansed, transformed and updated client data to ensure data quality required for successful project completion is achieved. Data quality report produced and delivered to clients identifying anomalous observations, outliers, trends and correlations.
+
+**Consultancy:** Liaised with clients and delivery consultants to establish customer requirements and accurately plan team resources and time allocation. Utilised a client and stakeholder focused approach to solution design and issue resolution. I presented results to both internal and external stakeholders, including C-level executives.
+
+**Project Management:** Managed projects concurrently, coordinating the input of other stakeholders. I organised tasks and recognised factors that had the potential to cause projects to fall behind schedule, meeting deadlines and managing time.
+
+**Management**: Formulated the team vision and objective in line with business strategy. Connected team members to strategic requirements through regular communication and delegation. I assisted with career management, including goal setting and ensuring staff were on the path to achieving their professional long-term goals.
+
+**Leadership:** Provided technical support and mentorship to junior analysts. This included articulating ideas and analytical concepts, conveying business and system processes, driving issue resolution and holding the team accountable for results.
+
+**Profiling:** Conducted customer profiling and segmentation to create distinct segments used for cross and upsell opportunities, tailored marketing communications and new customer growth by finding 'look-a-like' customers within the market.
+
+**Primary Tech Stack**: Google Cloud Platform (GCP), Tableau
+
+#### Project: Domino's New Store Model
+- **Description:** Developed a dataset combining household demographics, commercial demographics, and business sales data. Created new variables (average distance of delivery, cost of goods, breakeven distance) and built two models forecasting pickup sales and delivery sales.
+- **Objective:** Provide a report identifying the top 100 best new store locations.
+- **Outcome:** Domino's Australia validated the forecasts by comparing actual new store sales against the modelled predictions. About 70–80% of new store sales fell within the forecasted range.
+- **Challenges:**
+  1. **Domino's France** – Equifax had no data assets in France, so I had to source household demographics, geographical information, commercial demographics, and business sales data.
+  2. **Stability of Forecasts** – Models were rebuilt quarterly, requiring consistent stability of predictions.
+- **Accomplishments:**
+  - Built the "Delivery Distances Dashboard" for detailed operational performance views
+  - Enabled territory visualisation and heat maps of deliveries
+  - Provided store benchmarking capabilities
+  - Recommended the next top 100 sites for new locations, which stores needed to reduce their store territory size and which stores were underperforming
+  - Successfully rolled out the framework for Domino's New Zealand, Netherlands and France
+- **Leadership:** As Lead Data Scientist, facilitated fortnightly project update meetings and guided the team through complex analyses. Collaborated with marketing, head of franchise development, mapping analysts and project development, communicating via email, fortnightly calls and documentation of the methodology.
+
+### **SocietyOne**
+**Business Analyst** | **Oct 2015 - Sep 2016**
+
+*SocietyOne is an Australian FinTech company that pioneered peer-to-peer lending in the country. It connects investors directly with creditworthy borrowers through its digital platform, offering personal loans with competitive rates while providing an alternative to traditional banking institutions.*
+
+**Business Intelligence:** Developed BI and Reporting capability. Took ownership of development of data literacy and provided recommendations for project next steps and how to best utilise resources to achieve strategic objectives.
+
+**Data Blending and Cleansing:** Wrote and implemented complex SQL queries as part of the ETL process.
+
+**Data Governance:** Worked within a small team that drove data strategy including DWH testing, data modelling, BI tool selection and overall implementation.
+
+**Analysis Areas:**
+- Campaign Reporting
+- Sales Funnel Analysis
+- Metrics & Dimensions
+
+**Marketing Channels:**
+- Display/Retargeting, Direct Mail, eDM, eDM (Paid), Paid Search, Partners/Affiliates, Organic/Website, Digital
+
+**Experience:**
+- Part of the team that built Data Marts for reporting
+- Moved raw data from production through an integrated ETL process to simplify data into a star schema ready for analysis
+- Tested data by querying tables to ensure accuracy between raw data layers, staging, business layers, and DataMart
+- Tested business logic and wrote queries for marketing reporting including direct mail campaigns, board level reporting, and customer service reports
+
+**Primary Tech Stack**: Microsoft SQL, SSIS and SSRS, Tableau, MicroStrategy
+
+### **MediaCom**
+**Data Analyst** | **Apr 2013 - Nov 2015**
+
+*Business Science provides analytical services that are based on econometrics and include forecasting, budget setting and allocation, media-mix modelling for measuring campaign ROIs and optimisation tools.*
+
+
+
+**Econometric Modelling:** Liaised with senior modelers in the development and testing of statistical models. Developed simulations/forecasts for media planning and marketing mix optimisation.
+
+**Multi-Channel Strategy (Channel Performance)** -- determined incremental sales achieved at every level of spend for each channel. Optimise budget based on relative channel performance in order to maximize ROI.
+
+**Reporting Platform (BI):** Designed and implemented new reporting system to automate client ready reports, including; campaign performance monitoring, benchmarking, market analysis, period-on-period comparisons and campaign summaries.
+
+**Project Coordination:** Responsible for coordinating the restructure of data integration and processing, with the aim of integrating internal systems and combining them with disparate external data sources, including billing, online data, offline media spend and customer data.
+
+**Model Decomposition:** Produce insights and actionable recommendations from model, such as; elasticity of demand, impact from market & economic conditions, contribution from media and seasonality effects.
+
+**Media Planning:** Translated marketing metrics into actionable strategies to assist media buyers/planners achieve awareness goals, Reach and Frequency goals, wear out, and ad stocking. Translated marketing metrics performance into actionable strategies to inform client's decision-making process.
+
+### **OMD**
+**Data Analyst** | **Jul 2012 - Mar 2013**
+
+*BrandScience is Omnicom Media Group\'s (OMD) business and marketing effectiveness consultancy specializes in understanding ROI from different channels and different marketing activity.*
+
+**Analysis:** Investigated variable dynamics, seasonality and trends within the data: univariate analysis, multivariate analysis, variable distributions, and correlations.
+
+**Feasibility Analysis & Reporting:** Managed feasibility analysis, basic top line statistical and model robustness. Develop client-ready presentations and provided client with top line results, interpretation and selection of relevant insights.
+
+**Econometric Analysis:** Determined and extracted key outputs of econometric models: marketing ROIs, model fits, decomposition, response curves, potential ROI improvements and forecasting ability.
+
+**Analytics Experience:**
+- Applied statistical analysis techniques including Regression, Population Analysis, Exploratory Analysis, ANOVA
+- Used machine learning methods including Generalized Linear Models, Gradient Boosted Machines, and clustering techniques
+- Addressed business questions such as:
+  - Which media channels have the highest ROI?
+  - Which individuals across Australia are most likely to become AMEX customers?
+- Documented solutions and trained junior analysts
+- Delivered results to external clients in high-quality presentations, reports, and dashboards
+
+## EDUCATION
+
+**Macquarie University Bachelor of Commerce (Economics & Marketing)**
+
+**North Sydney Institute of TAFE | Diploma of Business (Marketing)**
+
+**SAS Certifications:**
+- "Predictive Modelling Using SAS InMemory Statistics Course"
+- "Predictive Modelling Using SAS High-Performance Analytics Procedures Course"
+
+## TECHNICAL SKILLS
+
+**Programming & Query Languages:**
+- SQL (daily use for 7+ years with large datasets exceeding 100 million records)
+- Python (data analysis, processing, and machine learning applications)
+- R (statistical modeling and data visualization)
+- SAS (Certified in "Predictive Modelling Using SAS InMemory Statistics" and "High-Performance Analytics")
+
+**Data Visualization:**
+- Tableau (Senior Developer)
+- Power BI
+- QlikView
+- Excel (advanced functions)
+
+**Platforms & Technologies:**
+- SQL Server and SSIS
+- Google Cloud Platform (GCP), including Hive SQL
+- Azure Cloud
+- Hadoop
+- Git (for documentation and version control)
+
+**Data Analysis Techniques:**
+- Regression analysis
+- Population analysis
+- ANOVA
+- Machine Learning (GLMs, Gradient Boosted Machines)
+- Clustering
+- Segmentation
+- Propensity modeling
+
+**Methodologies:**
+- Agile
+- JIRA
+- Data warehousing concepts (star/snowflake schemas, data layering)
+
+## PERSONAL APPROACH
+
+- Diligent, self-motivated with great attention to detail
+- Build strong relationships over time
+- Thrive outside comfort zone and continuously learn new skills
+- Strong communication skills (written and verbal)
+- Stakeholder management and collaboration
+- Time management and prioritization
+- Adaptability in fast-changing environments
+- Commitment to quality and accuracy
+- Mentorship experience (led a team of three at Equifax)
+- Not the loudest person in the room, but build strong relationships over time
+- Passionate about data and analytics work with a keen interest in both data engineering and analytics/dashboarding/reporting
+- Continually seeking to expand knowledge and skills in data engineering

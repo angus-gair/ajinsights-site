@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { useEffect, useState } from "react"
 
 interface ConfigurationStepProps {
   data: any
@@ -16,6 +17,36 @@ interface ConfigurationStepProps {
 
 export default function ConfigurationStep({ data, onUpdate, onNext }: ConfigurationStepProps) {
   const config = data.generationConfig || {}
+  const [isClient, setIsClient] = useState(false)
+
+  // Ensure client-side hydration safety
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
+
+  // Diagnostic logging for configuration step
+  useEffect(() => {
+    console.log("⚙️ CONFIGURATION STEP MOUNT - Initial Data:", data)
+    console.log("⚙️ SOURCE DOCUMENTS COUNT:", data.sourceDocuments?.length || 0)
+    console.log("⚙️ CONFIG:", config)
+
+    // Validate that we have source documents
+    if (data.sourceDocuments?.length === 0) {
+      console.error("🚨 CRITICAL: Configuration step loaded without source documents!")
+    }
+  }, [])
+
+  useEffect(() => {
+    console.log("⚙️ DATA PROP CHANGED:", data)
+    console.log("⚙️ SOURCE DOCUMENTS NOW:", data.sourceDocuments?.length || 0)
+    if (data.sourceDocuments?.length === 0) {
+      console.warn("🚨 POTENTIAL ISSUE: Source documents array is empty!")
+    }
+  }, [data])
+
+  useEffect(() => {
+    console.log("⚙️ CONFIG CHANGED:", config)
+  }, [config])
 
   const aiModels = [
     { value: "gpt-4", label: "GPT-4 (Recommended)", description: "Best quality, slower generation" },
@@ -26,31 +57,41 @@ export default function ConfigurationStep({ data, onUpdate, onNext }: Configurat
 
   const templates = [
     {
+      id: "data-analyst-continuous",
+      name: "Data Analyst Professional",
+      preview: "/test data/data-analyst-resume-continuous.html",
+      description: "Optimized for data science and analytics roles"
+    },
+    {
       id: "modern",
       name: "Modern Professional",
       preview: "/placeholder.svg?height=200&width=150&query=modern resume template",
+      description: "Clean, contemporary design for most industries"
     },
     {
       id: "classic",
       name: "Classic Traditional",
       preview: "/placeholder.svg?height=200&width=150&query=classic resume template",
+      description: "Traditional format for conservative industries"
     },
     {
-      id: "creative",
-      name: "Creative Design",
-      preview: "/placeholder.svg?height=200&width=150&query=creative resume template",
-    },
-    {
-      id: "minimal",
-      name: "Minimal Clean",
-      preview: "/placeholder.svg?height=200&width=150&query=minimal resume template",
+      id: "tech",
+      name: "Tech Focused",
+      preview: "/placeholder.svg?height=200&width=150&query=tech resume template",
+      description: "Designed specifically for technical roles"
     },
     {
       id: "executive",
       name: "Executive Level",
       preview: "/placeholder.svg?height=200&width=150&query=executive resume template",
+      description: "Premium design for senior leadership positions"
     },
-    { id: "tech", name: "Tech Focused", preview: "/placeholder.svg?height=200&width=150&query=tech resume template" },
+    {
+      id: "minimal",
+      name: "Minimal Clean",
+      preview: "/placeholder.svg?height=200&width=150&query=minimal resume template",
+      description: "Simple, distraction-free layout"
+    }
   ]
 
   const languages = [
@@ -70,8 +111,17 @@ export default function ConfigurationStep({ data, onUpdate, onNext }: Configurat
   ]
 
   const updateConfig = (key: string, value: any) => {
+    console.log("🔧 UPDATE CONFIG - Key:", key, "Value:", value)
     const newConfig = { ...config, [key]: value }
-    onUpdate({ generationConfig: newConfig })
+    console.log("🔧 NEW CONFIG:", newConfig)
+
+    // Ensure we're not losing source documents when updating config
+    const updateData = {
+      generationConfig: newConfig,
+      sourceDocuments: data.sourceDocuments || []
+    }
+    console.log("🔧 FULL UPDATE DATA:", updateData)
+    onUpdate(updateData)
   }
 
   const toggleEmphasis = (emphasisId: string) => {
@@ -83,6 +133,16 @@ export default function ConfigurationStep({ data, onUpdate, onNext }: Configurat
   }
 
   const isConfigComplete = config.aiModel && config.template && config.language
+
+  // Additional diagnostic info
+  useEffect(() => {
+    console.log("✅ CONFIG COMPLETE CHECK:", {
+      aiModel: !!config.aiModel,
+      template: !!config.template,
+      language: !!config.language,
+      isComplete: isConfigComplete
+    })
+  }, [isConfigComplete, config.aiModel, config.template, config.language])
 
   return (
     <div className="space-y-6">
@@ -128,17 +188,34 @@ export default function ConfigurationStep({ data, onUpdate, onNext }: Configurat
               <div
                 key={template.id}
                 className={`border-2 rounded-lg p-3 cursor-pointer transition-all ${config.template === template.id
-                    ? "border-blue-600 bg-blue-50"
-                    : "border-gray-200 hover:border-gray-300"
+                  ? "border-blue-600 bg-blue-50"
+                  : "border-gray-200 hover:border-gray-300"
                   }`}
                 onClick={() => updateConfig("template", template.id)}
               >
-                <img
-                  src={template.preview || "/placeholder.svg"}
-                  alt={template.name}
-                  className="w-full h-32 object-cover rounded mb-2"
-                />
-                <p className="text-sm font-medium text-center">{template.name}</p>
+                <div className="relative">
+                  {template.id === "data-analyst-continuous" ? (
+                    <div className="w-full h-32 bg-gradient-to-br from-blue-100 to-blue-200 rounded mb-2 flex items-center justify-center">
+                      <div className="text-center">
+                        <div className="text-blue-800 font-semibold text-sm">Data Analyst</div>
+                        <div className="text-blue-600 text-xs">Professional Template</div>
+                      </div>
+                    </div>
+                  ) : (
+                    <img
+                      src={template.preview || "/placeholder.svg"}
+                      alt={template.name}
+                      className="w-full h-32 object-cover rounded mb-2"
+                    />
+                  )}
+                  {config.template === template.id && (
+                    <div className="absolute top-1 right-1 bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center">
+                      ✓
+                    </div>
+                  )}
+                </div>
+                <p className="text-sm font-medium text-center mb-1">{template.name}</p>
+                <p className="text-xs text-gray-500 text-center">{template.description}</p>
               </div>
             ))}
           </div>
@@ -242,8 +319,45 @@ export default function ConfigurationStep({ data, onUpdate, onNext }: Configurat
 
       {/* Navigation */}
       <div className="flex justify-center">
-        <Button onClick={onNext} disabled={!isConfigComplete} size="lg">
+        <Button
+          onClick={() => {
+            console.log("🚀 START GENERATION CLICKED - Config Complete:", isConfigComplete)
+            console.log("🚀 FINAL CONFIG:", config)
+            console.log("🚀 FINAL DATA:", data)
+            console.log("🚀 SOURCE DOCUMENTS FINAL CHECK:", data.sourceDocuments?.length || 0)
+
+            if (!isConfigComplete) {
+              console.error("🚨 CONFIGURATION INCOMPLETE")
+              return
+            }
+
+            if (data.sourceDocuments?.length === 0) {
+              console.error("🚨 NO SOURCE DOCUMENTS AVAILABLE")
+              alert("Error: No source documents found. Please go back and upload your resume documents.")
+              return
+            }
+
+            // Ensure all data is preserved before proceeding
+            const finalUpdate = {
+              generationConfig: config,
+              sourceDocuments: data.sourceDocuments
+            }
+            onUpdate(finalUpdate)
+
+            setTimeout(() => {
+              console.log("🚀 PROCEEDING TO GENERATION")
+              onNext()
+            }, 100)
+          }}
+          disabled={!isConfigComplete}
+          size="lg"
+        >
           Start Resume Generation
+          {!isConfigComplete && (
+            <span className="ml-2 text-xs">
+              ({!config.aiModel ? "Select AI Model" : !config.template ? "Select Template" : "Select Language"})
+            </span>
+          )}
         </Button>
       </div>
     </div>
