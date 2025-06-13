@@ -10,6 +10,7 @@
     "start:dev": "concurrently \"npm run dev\" \"npm run start:api\"",
     "lint": "next lint",
     "deploy": "next build && touch out/.nojekyll",
+    "deploy:prod": "npm run build && git add . && git commit -m \"Deploy to production\" && git push",
     "test": "jest",
     "test:unit": "jest tests/unit",
     "test:unit:watch": "jest tests/unit --watch",
