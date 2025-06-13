@@ -2,13 +2,13 @@
 
 import type React from "react"
 
-import { useState } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Upload, FileText, Sparkles } from "lucide-react"
-import { Textarea } from "@/components/ui/textarea"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Textarea } from "@/components/ui/textarea"
+import { FileText, Sparkles, Upload } from "lucide-react"
+import { useState } from "react"
 
 interface JobDescriptionStepProps {
   data: any
@@ -18,8 +18,6 @@ interface JobDescriptionStepProps {
 
 export default function JobDescriptionStep({ data, onUpdate, onNext }: JobDescriptionStepProps) {
   const [uploadMethod, setUploadMethod] = useState<"file" | "text">("file")
-  const [jobText, setJobText] = useState("")
-  const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [selectedModel, setSelectedModel] = useState("")
   const [extractedRequirements, setExtractedRequirements] = useState<string[]>([])
   const [isExtracting, setIsExtracting] = useState(false)
@@ -34,8 +32,7 @@ export default function JobDescriptionStep({ data, onUpdate, onNext }: JobDescri
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     if (file) {
-      setSelectedFile(file)
-      onUpdate({ jobDescription: file })
+      onUpdate({ jobDescription: file, jobText: "" })
     }
   }
 
@@ -56,7 +53,8 @@ export default function JobDescriptionStep({ data, onUpdate, onNext }: JobDescri
     }, 2000)
   }
 
-  const canProceed = (uploadMethod === "file" && selectedFile) || (uploadMethod === "text" && jobText.trim())
+  const canProceed =
+    (uploadMethod === "file" && data.jobDescription) || (uploadMethod === "text" && data.jobText?.trim())
 
   return (
     <div className="space-y-6">
@@ -111,12 +109,13 @@ export default function JobDescriptionStep({ data, onUpdate, onNext }: JobDescri
                 accept=".pdf,.doc,.docx,.txt"
                 onChange={handleFileUpload}
                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                title="Upload job description file"
               />
             </div>
-            {selectedFile && (
+            {data.jobDescription && (
               <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg">
                 <p className="text-sm text-green-800">
-                  <strong>Selected:</strong> {selectedFile.name}
+                  <strong>Selected:</strong> {data.jobDescription.name}
                 </p>
               </div>
             )}
@@ -136,8 +135,8 @@ export default function JobDescriptionStep({ data, onUpdate, onNext }: JobDescri
             <Textarea
               id="job-text"
               placeholder="Paste the job description here..."
-              value={jobText}
-              onChange={(e) => setJobText(e.target.value)}
+              value={data.jobText || ""}
+              onChange={(e) => onUpdate({ jobText: e.target.value, jobDescription: null })}
               className="min-h-[200px] mt-2"
             />
           </CardContent>

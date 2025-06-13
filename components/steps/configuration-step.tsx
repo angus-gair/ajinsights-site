@@ -1,13 +1,12 @@
 "use client"
 
-import { useState } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 interface ConfigurationStepProps {
   data: any
@@ -16,7 +15,7 @@ interface ConfigurationStepProps {
 }
 
 export default function ConfigurationStep({ data, onUpdate, onNext }: ConfigurationStepProps) {
-  const [config, setConfig] = useState(data.generationConfig || {})
+  const config = data.generationConfig || {}
 
   const aiModels = [
     { value: "gpt-4", label: "GPT-4 (Recommended)", description: "Best quality, slower generation" },
@@ -72,7 +71,6 @@ export default function ConfigurationStep({ data, onUpdate, onNext }: Configurat
 
   const updateConfig = (key: string, value: any) => {
     const newConfig = { ...config, [key]: value }
-    setConfig(newConfig)
     onUpdate({ generationConfig: newConfig })
   }
 
@@ -129,11 +127,10 @@ export default function ConfigurationStep({ data, onUpdate, onNext }: Configurat
             {templates.map((template) => (
               <div
                 key={template.id}
-                className={`border-2 rounded-lg p-3 cursor-pointer transition-all ${
-                  config.template === template.id
+                className={`border-2 rounded-lg p-3 cursor-pointer transition-all ${config.template === template.id
                     ? "border-blue-600 bg-blue-50"
                     : "border-gray-200 hover:border-gray-300"
-                }`}
+                  }`}
                 onClick={() => updateConfig("template", template.id)}
               >
                 <img
