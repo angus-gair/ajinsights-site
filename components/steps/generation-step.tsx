@@ -4,7 +4,7 @@ import { useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
-import { Sparkles, CheckCircle, Clock, FileText } from "lucide-react"
+import { Sparkles, CheckCircle, Clock, FileText, AlertCircle } from "lucide-react"
 
 interface GenerationStepProps {
   data: any
@@ -17,6 +17,7 @@ export default function GenerationStep({ data, onUpdate, onNext }: GenerationSte
   const [progress, setProgress] = useState(0)
   const [currentTask, setCurrentTask] = useState("")
   const [generatedResume, setGeneratedResume] = useState("")
+  const [error, setError] = useState<string | null>(null)
 
   const generationTasks = [
     "Analyzing job requirements...",
@@ -28,63 +29,123 @@ export default function GenerationStep({ data, onUpdate, onNext }: GenerationSte
     "Finalizing resume...",
   ]
 
+  // Extract text content from source documents (simulated)
+  const extractDocumentContent = async (): Promise<string> => {
+    // In a real implementation, this would parse PDF/DOC files
+    // For now, we'll simulate extraction based on file names and basic info
+    const sourceFiles = data.sourceDocuments || []
+    
+    if (sourceFiles.length === 0) {
+      return "No source documents provided."
+    }
+
+    // Simulate content extraction from files
+    let extractedContent = "Extracted content from uploaded documents:\n\n"
+    sourceFiles.forEach((file: File, index: number) => {
+      extractedContent += `Document ${index + 1}: ${file.name}\n`
+      extractedContent += `- File type: ${file.type || 'Unknown'}\n`
+      extractedContent += `- Size: ${(file.size / 1024).toFixed(2)} KB\n\n`
+    })
+
+    return extractedContent
+  }
+
+  // Extract job description content
+  const extractJobDescription = (): string => {
+    if (data.jobDescription) {
+      // If it's a file
+      if (data.jobDescription instanceof File) {
+        return `Job Description from: ${data.jobDescription.name}`
+      }
+      // If it's text
+      if (typeof data.jobDescription === 'string') {
+        return data.jobDescription
+      }
+    }
+    return "No job description provided."
+  }
+
+  const generateResumeContent = async (): Promise<string> => {
+    const jobDesc = extractJobDescription()
+    const sourceContent = await extractDocumentContent()
+    const config = data.generationConfig || {}
+
+    // Create a basic resume structure based on actual data
+    const resume = `# Resume
+**Generated based on your uploaded documents and job requirements**
+
+---
+
+## Job Target
+${jobDesc}
+
+## Configuration
+- **AI Model:** ${config.aiModel || 'Default'}
+- **Template:** ${config.template || 'Professional'}
+- **Language Style:** ${config.language || 'Professional'}
+- **Word Limit:** ${config.wordLimit || 'No limit'}
+- **Emphasis Areas:** ${config.emphasis?.join(', ') || 'None specified'}
+
+## Source Documents Analysis
+${sourceContent}
+
+## Generated Resume Content
+
+### Professional Summary
+[This section would be generated based on the analysis of your uploaded CV and the job requirements. The AI would extract relevant experience and skills from your documents and tailor them to match the job description.]
+
+### Core Competencies
+[Skills and competencies extracted from your documents that match the job requirements would be listed here.]
+
+### Professional Experience
+[Your work history from the uploaded documents would be reformatted and tailored to emphasize experiences relevant to the target job.]
+
+### Education
+[Educational background extracted from your documents.]
+
+### Additional Sections
+[Any other relevant sections based on your uploaded content and the job requirements.]
+
+---
+
+**Note:** In a production environment, this would use advanced AI models to:
+1. Parse and extract content from your PDF/DOC files
+2. Analyze the job description for key requirements
+3. Match your experience to job requirements
+4. Generate tailored content that highlights relevant skills
+5. Format according to the selected template
+
+For now, this is a placeholder showing the structure and data that would be used.`
+
+    return resume
+  }
+
   const startGeneration = async () => {
     setGenerationStatus("generating")
     setProgress(0)
+    setError(null)
 
-    // Simulate AI generation process
-    for (let i = 0; i < generationTasks.length; i++) {
-      setCurrentTask(generationTasks[i])
-      setProgress(((i + 1) / generationTasks.length) * 100)
+    try {
+      // Simulate AI generation process
+      for (let i = 0; i < generationTasks.length; i++) {
+        setCurrentTask(generationTasks[i])
+        setProgress(((i + 1) / generationTasks.length) * 100)
 
-      // Simulate processing time
-      await new Promise((resolve) => setTimeout(resolve, 1500))
+        // Simulate processing time
+        await new Promise((resolve) => setTimeout(resolve, 1000))
+      }
+
+      // Generate actual resume content based on data
+      const generatedContent = await generateResumeContent()
+      
+      setGeneratedResume(generatedContent)
+      onUpdate({ generatedResume: generatedContent })
+      setGenerationStatus("complete")
+    } catch (err) {
+      console.error("Generation error:", err)
+      setError("Failed to generate resume. Please try again.")
+      setGenerationStatus("idle")
     }
-
-    // Mock generated resume content
-    const mockResume = `
-# John Doe
-**Software Engineer**
-
-📧 john.doe@email.com | 📱 (555) 123-4567 | 🔗 linkedin.com/in/johndoe
-
-## Professional Summary
-Experienced Software Engineer with 5+ years of expertise in React, TypeScript, and Node.js. Proven track record of delivering scalable web applications and leading cross-functional teams. Passionate about creating user-centric solutions and driving technical innovation.
-
-## Technical Skills
-- **Frontend:** React, TypeScript, JavaScript, HTML5, CSS3, Tailwind CSS
-- **Backend:** Node.js, Express, Python, RESTful APIs
-- **Databases:** PostgreSQL, MongoDB, Redis
-- **Cloud & DevOps:** AWS, Docker, CI/CD, Git
-- **Tools:** VS Code, Figma, Jira, Slack
-
-## Professional Experience
-
-### Senior Software Engineer | TechCorp Inc. | 2021 - Present
-- Led development of customer-facing web application serving 100K+ users
-- Implemented React-based frontend with TypeScript, improving code maintainability by 40%
-- Designed and built RESTful APIs using Node.js and Express
-- Collaborated with UX team to enhance user experience, resulting in 25% increase in user engagement
-- Mentored 3 junior developers and conducted code reviews
-
-### Software Engineer | StartupXYZ | 2019 - 2021
-- Developed full-stack web applications using React and Node.js
-- Integrated third-party APIs and payment systems
-- Optimized database queries, reducing response time by 30%
-- Participated in agile development process and sprint planning
-
-## Education
-**Bachelor of Science in Computer Science**
-University of Technology | 2015 - 2019
-
-## Certifications
-- AWS Certified Developer Associate (2022)
-- React Developer Certification (2021)
-    `
-
-    setGeneratedResume(mockResume)
-    onUpdate({ generatedResume: mockResume })
-    setGenerationStatus("complete")
   }
 
   return (
@@ -114,6 +175,11 @@ University of Technology | 2015 - 2019
           {generationStatus === "idle" && (
             <div className="text-center space-y-4">
               <p className="text-gray-600">Click the button below to start generating your tailored resume</p>
+              {error && (
+                <div className="p-3 bg-red-50 border border-red-200 rounded-md">
+                  <p className="text-sm text-red-600">{error}</p>
+                </div>
+              )}
               <Button onClick={startGeneration} size="lg" className="w-full">
                 <Sparkles className="mr-2 h-5 w-5" />
                 Generate Resume
@@ -192,7 +258,25 @@ University of Technology | 2015 - 2019
           </CardHeader>
           <CardContent>
             <div className="bg-gray-50 p-4 rounded-lg max-h-96 overflow-y-auto">
-              <pre className="whitespace-pre-wrap text-sm font-mono">{generatedResume}</pre>
+              <div className="prose prose-sm max-w-none">
+                {generatedResume.split('\n').map((line, index) => {
+                  if (line.startsWith('#')) {
+                    const level = line.match(/^#+/)?.[0].length || 1
+                    const text = line.replace(/^#+\s*/, '')
+                    const Tag = `h${Math.min(level, 6)}` as keyof JSX.IntrinsicElements
+                    return <Tag key={index} className="font-bold mt-4 mb-2">{text}</Tag>
+                  } else if (line.startsWith('**') && line.endsWith('**')) {
+                    return <p key={index} className="font-semibold">{line.replace(/\*\*/g, '')}</p>
+                  } else if (line.startsWith('-')) {
+                    return <li key={index} className="ml-4">{line.substring(1).trim()}</li>
+                  } else if (line === '---') {
+                    return <hr key={index} className="my-4" />
+                  } else if (line.trim()) {
+                    return <p key={index} className="mb-2">{line}</p>
+                  }
+                  return null
+                })}
+              </div>
             </div>
             <Button onClick={onNext} className="w-full mt-4" size="lg">
               Review & Edit Resume

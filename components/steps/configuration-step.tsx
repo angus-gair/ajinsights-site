@@ -16,8 +16,9 @@ interface ConfigurationStepProps {
 }
 
 export default function ConfigurationStep({ data, onUpdate, onNext }: ConfigurationStepProps) {
-  const config = data.generationConfig || {}
-  const [isClient, setIsClient] = useState(false)
+  const config = data.generationConfig || {};
+  const [isClient, setIsClient] = useState(false);
+  const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
 
   // Ensure client-side hydration safety
   useEffect(() => {
@@ -99,7 +100,42 @@ export default function ConfigurationStep({ data, onUpdate, onNext }: Configurat
     { value: "en-gb", label: "English (UK)" },
     { value: "en-au", label: "English (Australia)" },
     { value: "en-ca", label: "English (Canada)" },
-  ]
+  ];
+
+  const fetchTemplateDetails = async (templateId: string) => {
+    try {
+      const response = await fetch(`/api/templates?id=${templateId}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch template');
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error fetching template:', error);
+      // Return null or show error message
+      return null;
+    }
+  };
+
+  const handleTemplateSelect = async (templateId: string) => {
+    console.log("📋 Template selected:", templateId);
+    setSelectedTemplate(templateId);
+
+    // Optionally fetch template details
+    const templateDetails = await fetchTemplateDetails(templateId);
+    if (templateDetails) {
+      console.log("Template details:", templateDetails);
+    }
+
+    // Update parent component
+    onUpdate({
+      generationConfig: {
+        ...data.generationConfig,
+        template: templateId,
+        templateDetails: templateDetails // Optional: store full template data
+      }
+    });
+  };
 
   const emphasisOptions = [
     { id: "achievements", label: "Achievements & Results" },

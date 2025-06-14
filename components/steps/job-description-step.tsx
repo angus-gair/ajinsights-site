@@ -113,7 +113,7 @@ export default function JobDescriptionStep({ data, onUpdate, onNext }: JobDescri
         <Card>
           <CardHeader>
             <CardTitle>Upload Job Description File</CardTitle>
-            <CardDescription>Supported formats: PDF, DOC, DOCX, TXT</CardDescription>
+            <CardDescription>Supported formats: PDF, DOC, DOCX, TXT, MD</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-gray-400 transition-colors">
@@ -124,7 +124,7 @@ export default function JobDescriptionStep({ data, onUpdate, onNext }: JobDescri
               </div>
               <input
                 type="file"
-                accept=".pdf,.doc,.docx,.txt"
+                accept=".pdf,.doc,.docx,.txt,.md"
                 onChange={handleFileUpload}
                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                 title="Upload job description file"

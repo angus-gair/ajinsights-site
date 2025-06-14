@@ -5,6 +5,7 @@ import { Progress } from "@/components/ui/progress"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useState } from "react"
+import { resumeAPI } from "@/lib/api/resume-api"
 
 // Step Components
 import ConfigurationStep from "@/components/steps/configuration-step"
@@ -16,8 +17,9 @@ import SourceDocumentsStep from "@/components/steps/source-documents-step"
 
 // Types
 interface ResumeData {
+  id?: string // Add ID for saved resumes
   jobDescription?: File
-  selectedModel?: string
+  jobText?: string
   sourceDocuments: File[]
   generationConfig: {
     aiModel?: string
@@ -46,6 +48,47 @@ export default function CreateResumePage() {
     sourceDocuments: [],
     generationConfig: {},
   })
+  const [isSaving, setIsSaving] = useState(false)
+  const [lastSaved, setLastSaved] = useState<Date | null>(null)
+
+  // Auto-save to database
+  const saveToDatabase = async () => {
+    try {
+      setIsSaving(true)
+      console.log("💾 Saving to database...")
+      
+      const savedResume = await resumeAPI.saveProgress(resumeData.id, resumeData)
+      
+      // Update local state with saved ID
+      if (!resumeData.id && savedResume.id) {
+        setResumeData(prev => ({ ...prev, id: savedResume.id }))
+      }
+      
+      setLastSaved(new Date())
+      console.log("✅ Saved to database successfully", savedResume.id)
+    } catch (error) {
+      console.error("❌ Failed to save to database:", error)
+      // You might want to show a toast notification here
+    } finally {
+      setIsSaving(false)
+    }
+  }
+
+  // Auto-save when data changes (debounced)
+  useEffect(() => {
+    if (!isClient) return
+    
+    // Skip saving if no meaningful data
+    if (!resumeData.jobDescription && !resumeData.jobText && resumeData.sourceDocuments.length === 0) {
+      return
+    }
+    
+    const saveTimer = setTimeout(() => {
+      saveToDatabase()
+    }, 2000) // Save after 2 seconds of inactivity
+    
+    return () => clearTimeout(saveTimer)
+  }, [resumeData, isClient])
 
   // Hydration-safe client-side rendering
   useEffect(() => {
@@ -66,26 +109,54 @@ export default function CreateResumePage() {
 
       if (savedData) {
         const data = JSON.parse(savedData)
+        // Note: File objects cannot be restored from sessionStorage
+        // They will need to be re-uploaded
+        if (data.sourceDocuments) {
+          console.warn("⚠️ File objects cannot be restored from session storage. Users will need to re-upload files.")
+          data.sourceDocuments = [] // Clear the array since File objects can't be serialized
+        }
         setResumeData(data)
         console.log("🔄 RESTORED DATA FROM SESSION:", data)
       }
     } catch (error) {
       console.warn("⚠️ Failed to restore session data:", error)
+      // Clear corrupted session data
+      sessionStorage.removeItem('resumeCurrentStep')
+      sessionStorage.removeItem('resumeData')
     }
   }, [])
 
-  // Persist state to sessionStorage
+  // Persist state to sessionStorage with error handling
   useEffect(() => {
     if (isClient) {
-      sessionStorage.setItem('resumeCurrentStep', currentStep.toString())
-      console.log("💾 SAVED STEP TO SESSION:", currentStep)
+      try {
+        sessionStorage.setItem('resumeCurrentStep', currentStep.toString())
+        console.log("💾 SAVED STEP TO SESSION:", currentStep)
+      } catch (error) {
+        console.error("💾 Failed to save step to session:", error)
+      }
     }
   }, [currentStep, isClient])
 
   useEffect(() => {
     if (isClient) {
-      sessionStorage.setItem('resumeData', JSON.stringify(resumeData))
-      console.log("💾 SAVED DATA TO SESSION:", resumeData)
+      try {
+        // Create a serializable version of resumeData
+        const dataToSave = {
+          ...resumeData,
+          // Convert File objects to serializable format
+          sourceDocuments: resumeData.sourceDocuments?.map(file => ({
+            name: file.name,
+            size: file.size,
+            type: file.type,
+            lastModified: file.lastModified
+          }))
+        }
+        sessionStorage.setItem('resumeData', JSON.stringify(dataToSave))
+        console.log("💾 SAVED DATA TO SESSION (serialized)")
+      } catch (error) {
+        console.error("💾 Failed to save data to session:", error)
+      }
     }
   }, [resumeData, isClient])
 
@@ -106,18 +177,57 @@ export default function CreateResumePage() {
 
   const handleNext = () => {
     console.log("⏭️ HANDLE NEXT - Current Step:", currentStep, "Next:", currentStep + 1)
+    console.log("⏭️ Current resume data:", {
+      hasJobDescription: !!resumeData.jobDescription,
+      sourceDocuments: resumeData.sourceDocuments?.length || 0,
+      hasConfig: !!resumeData.generationConfig?.aiModel
+    })
+
     if (currentStep < steps.length) {
       const nextStep = currentStep + 1
-      setCurrentStep(nextStep)
-
-      // Validate progression requirements
-      if (nextStep === 3 && resumeData.sourceDocuments.length === 0) {
-        console.warn("🚨 ATTEMPTING TO SKIP TO CONFIG WITHOUT DOCUMENTS")
-        // Force back to source documents step
-        setCurrentStep(2)
+      
+      // Validate before moving to next step
+      const validationError = validateStep(currentStep)
+      if (validationError) {
+        console.error("🚨 Validation failed:", validationError)
+        // Could show error toast here
         return
       }
+
+      console.log("✅ Validation passed, moving to step", nextStep)
+      setCurrentStep(nextStep)
     }
+  }
+
+  const validateStep = (step: number): string | null => {
+    switch (step) {
+      case 1: // Job Description
+        if (!resumeData.jobDescription && !resumeData.jobText) {
+          return "Please upload or paste a job description"
+        }
+        break
+      case 2: // Source Documents
+        if (!resumeData.sourceDocuments || resumeData.sourceDocuments.length === 0) {
+          return "Please upload at least one source document"
+        }
+        break
+      case 3: // Configuration
+        if (!resumeData.generationConfig?.aiModel) {
+          return "Please select configuration options"
+        }
+        break
+      case 4: // Generation
+        if (!resumeData.generatedResume) {
+          return "Please generate your resume first"
+        }
+        break
+      case 5: // Review
+        if (!resumeData.finalResume) {
+          return "Please review and finalize your resume"
+        }
+        break
+    }
+    return null
   }
 
   const handlePrevious = () => {
@@ -129,9 +239,14 @@ export default function CreateResumePage() {
 
   const updateResumeData = (data: Partial<ResumeData>) => {
     console.log("🔧 UPDATE RESUME DATA - New Data:", data)
+    console.log("🔧 UPDATE RESUME DATA - Keys:", Object.keys(data))
+    
     setResumeData((prev) => {
       const newData = { ...prev, ...data }
-      console.log("🔧 UPDATED RESUME DATA - Full State:", newData)
+      console.log("🔧 UPDATED RESUME DATA - Full State:", {
+        ...newData,
+        sourceDocuments: newData.sourceDocuments?.map(f => ({ name: f.name, size: f.size }))
+      })
       return newData
     })
   }
@@ -158,7 +273,17 @@ export default function CreateResumePage() {
               <ArrowLeft className="h-5 w-5" />
               <span className="font-medium">Back to Home</span>
             </Link>
-            <h1 className="text-xl font-semibold">Create Your Resume</h1>
+            <div className="flex items-center gap-4">
+              <h1 className="text-xl font-semibold">Create Your Resume</h1>
+              {isSaving && (
+                <span className="text-sm text-gray-500">Saving...</span>
+              )}
+              {!isSaving && lastSaved && (
+                <span className="text-sm text-gray-500">
+                  Last saved: {lastSaved.toLocaleTimeString()}
+                </span>
+              )}
+            </div>
             <div className="w-24" /> {/* Spacer for centering */}
           </div>
         </div>

@@ -20,6 +20,13 @@ export default function ReviewStep({ data, onUpdate, onNext }: ReviewStepProps) 
   const [feedback, setFeedback] = useState("")
   const [isRegenerating, setIsRegenerating] = useState(false)
 
+  // Initialize with generated resume if available
+  useState(() => {
+    if (data.generatedResume && !editedResume) {
+      setEditedResume(data.generatedResume)
+    }
+  })
+
   const handleSave = () => {
     onUpdate({ finalResume: editedResume })
     setIsEditing(false)
@@ -37,13 +44,49 @@ export default function ReviewStep({ data, onUpdate, onNext }: ReviewStepProps) 
     }, 3000)
   }
 
-  const resumeSections = [
-    { id: "header", title: "Header & Contact", content: "John Doe\nSoftware Engineer\n📧 john.doe@email.com" },
-    { id: "summary", title: "Professional Summary", content: "Experienced Software Engineer with 5+ years..." },
-    { id: "skills", title: "Technical Skills", content: "Frontend: React, TypeScript, JavaScript..." },
-    { id: "experience", title: "Professional Experience", content: "Senior Software Engineer | TechCorp Inc..." },
-    { id: "education", title: "Education", content: "Bachelor of Science in Computer Science..." },
-  ]
+  // Parse resume sections from the generated content
+  const parseResumeSections = () => {
+    const resume = editedResume || data.generatedResume || ""
+    const sections = []
+    
+    // Split resume into sections based on headers
+    const lines = resume.split('\n')
+    let currentSection = null
+    let currentContent = []
+    
+    for (const line of lines) {
+      if (line.startsWith('##')) {
+        // Save previous section if exists
+        if (currentSection) {
+          sections.push({
+            id: currentSection.toLowerCase().replace(/\s+/g, '-'),
+            title: currentSection,
+            content: currentContent.join('\n').trim()
+          })
+        }
+        // Start new section
+        currentSection = line.replace(/^#+\s*/, '')
+        currentContent = []
+      } else if (currentSection) {
+        currentContent.push(line)
+      }
+    }
+    
+    // Save last section
+    if (currentSection) {
+      sections.push({
+        id: currentSection.toLowerCase().replace(/\s+/g, '-'),
+        title: currentSection,
+        content: currentContent.join('\n').trim()
+      })
+    }
+    
+    return sections.length > 0 ? sections : [
+      { id: "content", title: "Resume Content", content: resume }
+    ]
+  }
+
+  const resumeSections = parseResumeSections()
 
   return (
     <div className="space-y-6">
@@ -100,7 +143,25 @@ export default function ReviewStep({ data, onUpdate, onNext }: ReviewStepProps) 
                 </div>
               ) : (
                 <div className="bg-white border rounded-lg p-6 max-h-[500px] overflow-y-auto">
-                  <pre className="whitespace-pre-wrap text-sm">{editedResume}</pre>
+                  <div className="prose prose-sm max-w-none">
+                    {editedResume.split('\n').map((line, index) => {
+                      if (line.startsWith('#')) {
+                        const level = line.match(/^#+/)?.[0].length || 1
+                        const text = line.replace(/^#+\s*/, '')
+                        const Tag = `h${Math.min(level, 6)}` as keyof JSX.IntrinsicElements
+                        return <Tag key={index} className="font-bold mt-4 mb-2">{text}</Tag>
+                      } else if (line.startsWith('**') && line.endsWith('**')) {
+                        return <p key={index} className="font-semibold">{line.replace(/\*\*/g, '')}</p>
+                      } else if (line.startsWith('-')) {
+                        return <li key={index} className="ml-4">{line.substring(1).trim()}</li>
+                      } else if (line === '---') {
+                        return <hr key={index} className="my-4" />
+                      } else if (line.trim()) {
+                        return <p key={index} className="mb-2">{line}</p>
+                      }
+                      return null
+                    })}
+                  </div>
                 </div>
               )}
             </CardContent>
@@ -115,7 +176,16 @@ export default function ReviewStep({ data, onUpdate, onNext }: ReviewStepProps) 
               </CardHeader>
               <CardContent>
                 <div className="bg-gray-50 p-4 rounded-lg">
-                  <pre className="whitespace-pre-wrap text-sm">{section.content}</pre>
+                  <div className="prose prose-sm max-w-none">
+                    {section.content.split('\n').map((line, idx) => {
+                      if (line.startsWith('-')) {
+                        return <li key={idx} className="ml-4">{line.substring(1).trim()}</li>
+                      } else if (line.trim()) {
+                        return <p key={idx} className="mb-1">{line}</p>
+                      }
+                      return null
+                    })}
+                  </div>
                 </div>
                 <Button variant="outline" size="sm" className="mt-2">
                   <Edit className="mr-2 h-3 w-3" />
@@ -164,28 +234,38 @@ export default function ReviewStep({ data, onUpdate, onNext }: ReviewStepProps) 
         <CardContent>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="text-center">
-              <p className="text-2xl font-bold text-blue-600">487</p>
+              <p className="text-2xl font-bold text-blue-600">{editedResume.split(' ').length}</p>
               <p className="text-sm text-gray-600">Total Words</p>
             </div>
             <div className="text-center">
-              <p className="text-2xl font-bold text-green-600">15</p>
-              <p className="text-sm text-gray-600">Key Skills</p>
+              <p className="text-2xl font-bold text-green-600">{resumeSections.length}</p>
+              <p className="text-sm text-gray-600">Sections</p>
             </div>
             <div className="text-center">
-              <p className="text-2xl font-bold text-purple-600">8</p>
-              <p className="text-sm text-gray-600">Job Matches</p>
+              <p className="text-2xl font-bold text-purple-600">{data.sourceDocuments?.length || 0}</p>
+              <p className="text-sm text-gray-600">Source Docs</p>
             </div>
             <div className="text-center">
-              <p className="text-2xl font-bold text-orange-600">92%</p>
-              <p className="text-sm text-gray-600">ATS Score</p>
+              <p className="text-2xl font-bold text-orange-600">{editedResume.split('\n').length}</p>
+              <p className="text-sm text-gray-600">Total Lines</p>
             </div>
           </div>
-          <div className="mt-4 flex flex-wrap gap-2">
-            <Badge variant="secondary">React</Badge>
-            <Badge variant="secondary">TypeScript</Badge>
-            <Badge variant="secondary">Node.js</Badge>
-            <Badge variant="secondary">Leadership</Badge>
-            <Badge variant="secondary">Problem Solving</Badge>
+          <div className="mt-4">
+            <p className="text-sm text-gray-600 mb-2">Configuration used:</p>
+            <div className="flex flex-wrap gap-2">
+              {data.generationConfig?.aiModel && (
+                <Badge variant="secondary">Model: {data.generationConfig.aiModel}</Badge>
+              )}
+              {data.generationConfig?.template && (
+                <Badge variant="secondary">Template: {data.generationConfig.template}</Badge>
+              )}
+              {data.generationConfig?.language && (
+                <Badge variant="secondary">Style: {data.generationConfig.language}</Badge>
+              )}
+              {data.generationConfig?.emphasis?.map((item: string, index: number) => (
+                <Badge key={index} variant="secondary">{item}</Badge>
+              ))}
+            </div>
           </div>
         </CardContent>
       </Card>

@@ -29,7 +29,15 @@
     "mcp:start": "node scripts/start-mcp-servers.js",
     "mcp:stop": "node scripts/stop-mcp-servers.js",
     "type-check": "tsc --noEmit",
-    "type-check:watch": "npm run type-check -- --watch"
+    "type-check:watch": "npm run type-check -- --watch",
+    "db:setup": "node scripts/setup-database.js",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:push": "prisma db push",
+    "db:seed": "prisma db seed",
+    "db:studio": "prisma studio",
+    "db:format": "prisma format",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
@@ -62,6 +70,7 @@
     "@radix-ui/react-tooltip": "1.1.6",
     "@types/cors": "^2.8.18",
     "@types/express": "^5.0.2",
+    "@prisma/client": "^5.22.0",
     "autoprefixer": "^10.4.20",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -101,6 +110,7 @@
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^30.0.0-beta.3",
     "postcss": "^8",
+    "prisma": "^5.22.0",
     "supertest": "^7.1.1",
     "tailwindcss": "^3.4.17",
     "ts-jest": "^29.3.4",
