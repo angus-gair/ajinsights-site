@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Angus James - Senior Data Analyst</title>
+  <style>
+    /* Enhanced Base Styles */
+    :root {
+      --accent-color: #1565C0;
+      --accent-light: #E3F2FD;
+      --font-family: 'Segoe UI', 'Open Sans', Arial, sans-serif;
+      --font-size-body: 10pt;
+      --font-size-small: 9pt;
+      --font-size-heading: 11pt;
+      --font-size-name: 28pt;
+      --font-weight-normal: 400;
+      --font-weight-bold: 600;
+      --line-height: 1.5;
+      --padding: 0.5in;
+      --spacing-xs: 2pt;
+      --spacing-small: 4pt;
+      --spacing-medium: 8pt;
+      --spacing-large: 16pt;
+      --bullet-char: '▸';
+      --color-text: #212121;
+      --color-secondary: #424242;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      color: var(--color-text);
+      font-weight: var(--font-weight-normal);
+      font-size: var(--font-size-body);
+      font-family: var(--font-family);
+      line-height: var(--line-height);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* Single continuous page */
+    .page {
+      padding: var(--padding);
+      width: 8.5in;
+      min-height: 28in; /* Two pages worth */
+      background-color: white;
+      position: relative;
+    }
+
+    /* Compact Header */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--spacing-medium);
+      padding-bottom: var(--spacing-medium);
+      border-bottom: 2px solid var(--accent-color);
+    }
+
+    .header-primary {
+      flex: 1;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: baseline;
+      gap: 1em;
+    }
+
+    .full-name {
+      color: var(--accent-color);
+      font-weight: var(--font-weight-bold);
+      font-size: var(--font-size-name);
+      line-height: 1;
+    }
+
+    .title {
+      font-size: calc(var(--font-size-heading) + 2pt);
+      color: var(--color-secondary);
+      font-weight: var(--font-weight-normal);
+    }
+
+    .contact-details {
+      display: flex;
+      gap: 1em;
+      font-size: var(--font-size-small);
+      color: var(--color-secondary);
+    }
+
+    .contact-details span:not(:last-child)::after {
+      content: '|';
+      margin-left: 1em;
+      color: #BDBDBD;
+    }
+
+    /* Content Layout */
+    .content {
+      display: flex;
+      gap: 3%;
+    }
+
+    .col-main {
+      flex: 0 0 67%;
+    }
+
+    .col-aside {
+      flex: 0 0 30%;
+    }
+
+    /* Section Styles */
+    .section {
+      margin-bottom: var(--spacing-large);
+    }
+
+    .section-title {
+      text-transform: uppercase;
+      color: var(--accent-color);
+      font-weight: var(--font-weight-bold);
+      font-size: var(--font-size-heading);
+      border-bottom: 1px solid var(--accent-light);
+      margin-bottom: var(--spacing-medium);
+      padding-bottom: 2pt;
+      letter-spacing: 0.5pt;
+    }
+
+    /* Block Styles */
+    .block {
+      margin-bottom: var(--spacing-medium);
+    }
+
+    .block-heading {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .heading-primary {
+      font-weight: var(--font-weight-bold);
+      font-size: var(--font-size-heading);
+      color: var(--color-text);
+    }
+
+    .heading-secondary {
+      font-size: var(--font-size-body);
+      color: var(--color-secondary);
+      font-style: italic;
+    }
+
+    .heading-minor {
+      font-size: var(--font-size-small);
+      color: var(--color-secondary);
+    }
+
+    /* Professional Summary */
+    .professional-summary {
+      font-size: var(--font-size-body);
+      color: var(--color-text);
+      margin-bottom: var(--spacing-medium);
+      line-height: 1.6;
+    }
+
+    /* List Styles */
+    ul {
+      list-style: none;
+      margin-left: 0;
+    }
+
+    li {
+      position: relative;
+      margin-bottom: var(--spacing-small);
+      padding-left: 16pt;
+      line-height: 1.4;
+    }
+
+    li:before {
+      content: var(--bullet-char);
+      position: absolute;
+      left: 0;
+      color: var(--accent-color);
+    }
+
+    /* Skills Styling */
+    .skills-category {
+      margin-bottom: var(--spacing-medium);
+    }
+
+    .skill-category-title {
+      font-weight: var(--font-weight-bold);
+      font-size: var(--font-size-small);
+      color: var(--color-text);
+      margin-bottom: var(--spacing-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.3pt;
+    }
+
+    .skills-list {
+      font-size: var(--font-size-small);
+    }
+
+    .skills-list li {
+      margin-bottom: 2pt;
+      padding-left: 12pt;
+    }
+
+    /* Project Styles */
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .project-impact {
+      font-size: var(--font-size-small);
+      color: var(--accent-color);
+      font-weight: var(--font-weight-bold);
+    }
+
+    /* Links */
+    a {
+      color: var(--accent-color);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* Print Styles */
+    @media print {
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      
+      .page {
+        width: 8.5in;
+        min-height: 22in;
+        padding: 0.5in;
+      }
+    }
+
+    /* Screen Styles */
+    @media screen {
+      body {
+        background-color: #f5f5f5;
+        display: flex;
+        justify-content: center;
+        padding: 2rem 0;
+      }
+      
+      .page {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        max-width: 8.5in;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <!-- Compact Header -->
+    <div class="header">
+      <div class="header-primary">
+        <div class="header-content">
+          <span class="full-name">ANGUS JAMES</span>
+          <span class="title">Senior Data Analyst & Business Intelligence Leader</span>
+        </div>
+        <div class="contact-details">
+          <span>Sydney, NSW</span>
+          <span>(02) 8201 3710</span>
+          <span>angus@AJinsights.com.au</span>
+          <span><a href="https://www.linkedin.com/in/angus-james-g/">linkedin.com/in/angus-james</a></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <!-- Main Column -->
+      <div class="col-main">
+        <!-- Professional Summary -->
+        <div class="section">
+          <div class="section-title">Professional Summary</div>
+          <div class="professional-summary">
+            Senior Data Analyst with 8+ years transforming complex data into strategic insights across retail, finance, and transport sectors. Expert in SQL, Python, Tableau, and cloud platforms, with proven success delivering $40M+ in value through predictive modelling and process optimisation. Founded AJ Insights to democratise enterprise analytics for SMEs.
+          </div>
+        </div>
+
+        <!-- Work Experience -->
+        <div class="section">
+          <div class="section-title">Professional Experience</div>
+          
+          <!-- AJ Insights -->
+          <div class="block">
+            <div class="block-heading">
+              <span class="heading-primary">AJ Insights</span>
+              <span class="heading-minor">December 2024 - Present</span>
+            </div>
+            <div class="heading-secondary">Founder & Lead Developer</div>
+            <ul>
+              <li>Architected enterprise analytics platform integrating PostgreSQL, Python, React, and GraphQL for SME democratisation</li>
+              <li>Developed predictive modelling engine using TensorFlow delivering advanced analytics previously exclusive to enterprises</li>
+              <li>Built AI-driven insights system using Anthropic and OpenAI APIs for automated business intelligence generation</li>
+              <li>Designed comprehensive API architecture with JWT authentication and rate limiting for scalable data access</li>
+              <li>Created integrated CRM and website services enabling end-to-end digital transformation for small businesses</li>
+            </ul>
+          </div>
+
+          <!-- WooliesX -->
+          <div class="block">
+            <div class="block-heading">
+              <span class="heading-primary">WooliesX</span>
+              <span class="heading-minor">April 2024 - December 2024</span>
+            </div>
+            <div class="heading-secondary">Senior Performance & Optimisation Analyst</div>
+            <ul>
+              <li>Designed Points Cost Forecast system tracking $52.3M annual costs with 97.8% accuracy using BigQuery SQL</li>
+              <li>Identified $41.5M revenue opportunities through BWS MMM analysis across 5.8M members and 14-month data</li>
+              <li>Engineered Marketing Mix pipeline processing 170M+ transactions with scalable ETL architecture</li>
+              <li>Led Big W loyalty member redefinition affecting 10M+ members, securing FY25 executive approval</li>
+              <li>Built automated KPI framework tracking 18+ metrics, reducing manual reporting effort by 80%</li>
+            </ul>
+          </div>
+
+          <!-- Sydney Trains -->
+          <div class="block">
+            <div class="block-heading">
+              <span class="heading-primary">Sydney Trains</span>
+              <span class="heading-minor">June 2021 - December 2023</span>
+            </div>
+            <div class="heading-secondary">Senior Data Analyst</div>
+            <ul>
+              <li>Developed PCM Productivity Model tracking $70M wages for 1,400 drivers with two-decimal precision</li>
+              <li>Implemented 80+ coded pay rules from 130-page Enterprise Agreement enabling transparent cost analysis</li>
+              <li>Built enterprise KPI dashboards for C-suite executives, reducing reporting runtime by 60%</li>
+              <li>Created ML model for dwell time analysis improving operational efficiency across network</li>
+              <li>Pioneered passenger weight prediction model uncovering 4.5M additional passengers during fare-free periods</li>
+            </ul>
+          </div>
+
+          <!-- Woolworths Group -->
+          <div class="block">
+            <div class="block-heading">
+              <span class="heading-primary">Woolworths Group</span>
+              <span class="heading-minor">June 2020 - June 2021</span>
+            </div>
+            <div class="heading-secondary">Senior Tableau Developer</div>
+            <ul>
+              <li>Re-built Planning & Performance dashboard in Power BI serving 300+ daily users across 1,000+ stores</li>
+              <li>Delivered Post Implementation Review Dashboard evaluating automated rostering system effectiveness</li>
+              <li>Maintained data integrity during national rollout ensuring decision-making for roster optimisation</li>
+              <li>Translated business requirements into technical schemas bridging business and development teams</li>
+            </ul>
+          </div>
+
+          <!-- Prospa -->
+          <div class="block">
+            <div class="block-heading">
+              <span class="heading-primary">Prospa</span>
+              <span class="heading-minor">December 2019 - April 2020</span>
+            </div>
+            <div class="heading-secondary">Business Intelligence Analyst</div>
+            <ul>
+              <li>Implemented data strategies achieving 15% revenue increase and 10% operating cost reduction</li>
+              <li>Developed cross-functional dashboards using Tableau spanning marketing, operations, sales, and finance</li>
+              <li>Utilised cloud-native stack including Snowflake, Databricks, and Azure with CI/CD pipelines</li>
+              <li>Created analytical frameworks for fee amortisation and default monitoring supporting risk management</li>
+            </ul>
+          </div>
+
+          <!-- Mastercard -->
+          <div class="block">
+            <div class="block-heading">
+              <span class="heading-primary">Mastercard</span>
+              <span class="heading-minor">August 2019 - December 2019</span>
+            </div>
+            <div class="heading-secondary">Analytics & Tableau Consultant</div>
+            <ul>
+              <li>Developed data analysis strategy achieving 15% increase in customer retention through targeted insights</li>
+              <li>Analysed 100M+ transaction records extracting behaviour patterns and engagement opportunities</li>
+              <li>Conducted post-campaign analysis increasing incremental customer engagement rates</li>
+              <li>Built automated dashboards enabling real-time campaign performance monitoring</li>
+            </ul>
+          </div>
+
+          <!-- Equifax -->
+          <div class="block">
+            <div class="block-heading">
+              <span class="heading-primary">Equifax</span>
+              <span class="heading-minor">September 2016 - August 2019</span>
+            </div>
+            <div class="heading-secondary">Data Scientist (Client Analytics)</div>
+            <ul>
+              <li>Created 13 voter prediction models achieving 3.9x performance uplift verified through live polling</li>
+              <li>Built Domino's location framework with 70-80% accuracy enabling international expansion</li>
+              <li>Developed AMEX Platinum propensity models delivering 1.8x uplift over previous campaigns</li>
+              <li>Led agile transformation for analytics team improving project delivery and budget adherence</li>
+              <li>Analysed 1.4M credit enquiries identifying competitive insights across demographic segments</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Key Projects -->
+        <div class="section">
+          <div class="section-title">Major Projects & Achievements</div>
+          
+          <div class="block">
+            <div class="project-header">
+              <span class="heading-primary">Enterprise Loyalty Cost Forecasting System</span>
+              <span class="project-impact">$52.3M • 97.8% Accuracy</span>
+            </div>
+            <ul>
+              <li>Architected BigQuery SQL pipeline integrating 15+ data sources for comprehensive cost tracking</li>
+              <li>Developed basis point forecasting algorithms enabling precise budget allocation and variance analysis</li>
+              <li>Created executive dashboards with drill-down capabilities from KPIs to category performance</li>
+              <li>Enabled real-time cost comparison supporting strategic marketing optimisation decisions</li>
+            </ul>
+          </div>
+
+          <div class="block">
+            <div class="project-header">
+              <span class="heading-primary">Marketing Mix Modeling & ROI Analysis</span>
+              <span class="project-impact">$41.5M Revenue Opportunity</span>
+            </div>
+            <ul>
+              <li>Analysed 14 months of campaign data across 5.8M members identifying incremental revenue opportunities</li>
+              <li>Proved 3.27× faster basket growth using survival analysis and propensity scoring techniques</li>
+              <li>Secured FY25 budget approval through comprehensive ROI demonstration and executive presentations</li>
+              <li>Optimised customer targeting strategies through advanced uplift modeling and segmentation</li>
+            </ul>
+          </div>
+
+          <div class="block">
+            <div class="project-header">
+              <span class="heading-primary">Workforce Productivity & Cost Model</span>
+              <span class="project-impact">$70M Wage Tracking • $15M Savings</span>
+            </div>
+            <ul>
+              <li>Built multi-layer data model spanning 6-month Master to Daily views with payroll reconciliation</li>
+              <li>Automated 80+ Enterprise Agreement rules translating complex regulations into calculations</li>
+              <li>Identified $15M in excess shift costs enabling strategic workforce optimisation initiatives</li>
+              <li>Delivered transparent costing framework supporting data-driven timetable decisions</li>
+            </ul>
+          </div>
+
+          <div class="block">
+            <div class="project-header">
+              <span class="heading-primary">Predictive Store Location Framework</span>
+              <span class="project-impact">70-80% Accuracy • 4 Countries</span>
+            </div>
+            <ul>
+              <li>Integrated demographic, commercial, and sales data for comprehensive location analysis</li>
+              <li>Developed dual forecasting models for pickup and delivery achieving high prediction accuracy</li>
+              <li>Created innovative metrics including delivery distance and breakeven calculations</li>
+              <li>Successfully adapted framework for international markets across NZ, Netherlands, and France</li>
+            </ul>
+          </div>
+
+          <div class="block">
+            <div class="project-header">
+              <span class="heading-primary">Political Analytics & Voter Modeling</span>
+              <span class="project-impact">3.9x Performance • 10M Households</span>
+            </div>
+            <ul>
+              <li>Built 13 predictive models identifying voter intention across parties and policy issues</li>
+              <li>Achieved 3.9x Greens model uplift validated through independent telephone polling</li>
+              <li>Delivered household-level insights covering entire Australian electoral landscape</li>
+              <li>Enabled targeted campaign strategies via direct mail, telephone, and door-knocking</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="col-aside">
+        <!-- Core Technical Skills -->
+        <div class="section">
+          <div class="section-title">Technical Expertise</div>
+          
+          <div class="skills-category">
+            <div class="skill-category-title">Data Analysis & SQL</div>
+            <ul class="skills-list">
+              <li>Advanced SQL (100M+ records)</li>
+              <li>BigQuery, PostgreSQL, MySQL</li>
+              <li>Data Pipeline Architecture</li>
+              <li>ETL Process Design</li>
+              <li>Schema Design & Optimization</li>
+            </ul>
+          </div>
+
+          <div class="skills-category">
+            <div class="skill-category-title">Programming & Analytics</div>
+            <ul class="skills-list">
+              <li>Python (Pandas, NumPy, TensorFlow)</li>
+              <li>R (tidyverse, ggplot2)</li>
+              <li>Statistical Modeling</li>
+              <li>Machine Learning & AI</li>
+              <li>Git Version Control</li>
+            </ul>
+          </div>
+
+          <div class="skills-category">
+            <div class="skill-category-title">Business Intelligence</div>
+            <ul class="skills-list">
+              <li>Tableau (Advanced)</li>
+              <li>Power BI Development</li>
+              <li>Executive Dashboards</li>
+              <li>KPI Framework Design</li>
+              <li>Data Storytelling</li>
+            </ul>
+          </div>
+
+          <div class="skills-category">
+            <div class="skill-category-title">Cloud & Infrastructure</div>
+            <ul class="skills-list">
+              <li>Google Cloud Platform</li>
+              <li>AWS (S3, Redshift, SageMaker)</li>
+              <li>Azure Analytics Stack</li>
+              <li>Snowflake & Databricks</li>
+              <li>API Integration (REST, GraphQL)</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Leadership Skills -->
+        <div class="section">
+          <div class="section-title">Leadership & Business</div>
+          <ul class="skills-list">
+            <li>Strategic Planning & Vision</li>
+            <li>Stakeholder Management (C-Level)</li>
+            <li>Cross-functional Team Leadership</li>
+            <li>Agile Project Management</li>
+            <li>Business Case Development</li>
+            <li>Change Management</li>
+            <li>Technical Communication</li>
+            <li>Mentorship & Training</li>
+          </ul>
+        </div>
+
+        <!-- Education -->
+        <div class="section">
+          <div class="section-title">Education</div>
+          <div class="block">
+            <div class="heading-primary">Bachelor of Commerce</div>
+            <div class="heading-secondary">Macquarie University</div>
+            <div class="heading-minor">Economics & Marketing</div>
+          </div>
+          <div class="block">
+            <div class="heading-primary">Diploma of Business</div>
+            <div class="heading-secondary">North Sydney Institute of TAFE</div>
+            <div class="heading-minor">Marketing</div>
+          </div>
+        </div>
+
+        <!-- Certifications -->
+        <div class="section">
+          <div class="section-title">Certifications</div>
+          <div class="block">
+            <div class="heading-primary">Data Manipulation in Python</div>
+            <div class="heading-minor">Udemy • 2024</div>
+          </div>
+          <div class="block">
+            <div class="heading-primary">Computing in Python I & II</div>
+            <div class="heading-minor">Georgia Tech • 2020</div>
+          </div>
+          <div class="block">
+            <div class="heading-primary">Predictive Modeling (SAS)</div>
+            <div class="heading-minor">SAS Institute • 2017</div>
+          </div>
+        </div>
+
+        <!-- Industry Experience -->
+        <div class="section">
+          <div class="section-title">Industry Experience</div>
+          <div class="skills-category">
+            <div class="skill-category-title">Retail & E-commerce</div>
+            <ul class="skills-list">
+              <li>Woolworths Group, WooliesX</li>
+              <li>Big W, Domino's Pizza</li>
+              <li>Loyalty Program Analytics</li>
+              <li>Customer Lifecycle Management</li>
+            </ul>
+          </div>
+
+          <div class="skills-category">
+            <div class="skill-category-title">Financial Services</div>
+            <ul class="skills-list">
+              <li>Equifax, Mastercard, Prospa</li>
+              <li>Credit Risk Modeling</li>
+              <li>Propensity Modeling</li>
+              <li>Fraud Detection Analytics</li>
+            </ul>
+          </div>
+
+          <div class="skills-category">
+            <div class="skill-category-title">Transportation & Gov</div>
+            <ul class="skills-list">
+              <li>Sydney Trains, ACTU</li>
+              <li>Operational Analytics</li>
+              <li>Workforce Optimization</li>
+              <li>Political Analytics</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Special Projects -->
+        <div class="section">
+          <div class="section-title">Innovation & Leadership</div>
+          <div class="block">
+            <div class="heading-primary">AJ Insights Platform</div>
+            <p style="font-size: var(--font-size-small); margin-bottom: var(--spacing-small);">
+              Founded AI-powered analytics platform democratising enterprise capabilities for SMEs through integrated CRM, analytics, and business intelligence.
+            </p>
+            <ul class="skills-list">
+              <li>Full-stack architecture design</li>
+              <li>AI integration (Anthropic, OpenAI)</li>
+              <li>Geospatial analytics development</li>
+              <li>API ecosystem creation</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Professional Approach -->
+        <div class="section">
+          <div class="section-title">Professional Approach</div>
+          <p style="font-size: var(--font-size-small); line-height: 1.6;">
+            I combine technical excellence with strategic business thinking to deliver measurable outcomes. My methodology emphasises data integrity, stakeholder collaboration, and translating complex analytics into clear business value. With a track record of $100M+ in analysed operations and consistent delivery of double-digit improvements, I focus on building scalable solutions that drive long-term organisational growth.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html> 
