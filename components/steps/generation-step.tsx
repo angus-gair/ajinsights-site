@@ -259,23 +259,48 @@ For now, this is a placeholder showing the structure and data that would be used
           <CardContent>
             <div className="bg-gray-50 p-4 rounded-lg max-h-96 overflow-y-auto">
               <div className="prose prose-sm max-w-none">
-                {generatedResume.split('\n').map((line, index) => {
-                  if (line.startsWith('#')) {
-                    const level = line.match(/^#+/)?.[0].length || 1
-                    const text = line.replace(/^#+\s*/, '')
-                    const Tag = `h${Math.min(level, 6)}` as keyof JSX.IntrinsicElements
-                    return <Tag key={index} className="font-bold mt-4 mb-2">{text}</Tag>
-                  } else if (line.startsWith('**') && line.endsWith('**')) {
-                    return <p key={index} className="font-semibold">{line.replace(/\*\*/g, '')}</p>
-                  } else if (line.startsWith('-')) {
-                    return <li key={index} className="ml-4">{line.substring(1).trim()}</li>
-                  } else if (line === '---') {
-                    return <hr key={index} className="my-4" />
-                  } else if (line.trim()) {
-                    return <p key={index} className="mb-2">{line}</p>
+                {(() => {
+                  const lines = generatedResume.split('\n')
+                  const elements: JSX.Element[] = []
+                  let currentListItems: string[] = []
+                  
+                  const flushListItems = () => {
+                    if (currentListItems.length > 0) {
+                      elements.push(
+                        <ul key={`list-${elements.length}`} className="ml-4 mb-2">
+                          {currentListItems.map((item, index) => (
+                            <li key={index}>{item}</li>
+                          ))}
+                        </ul>
+                      )
+                      currentListItems = []
+                    }
                   }
-                  return null
-                })}
+                  
+                  lines.forEach((line, index) => {
+                    if (line.startsWith('#')) {
+                      flushListItems()
+                      const level = line.match(/^#+/)?.[0].length || 1
+                      const text = line.replace(/^#+\s*/, '')
+                      const Tag = `h${Math.min(level, 6)}` as keyof JSX.IntrinsicElements
+                      elements.push(<Tag key={index} className="font-bold mt-4 mb-2">{text}</Tag>)
+                    } else if (line.startsWith('**') && line.endsWith('**')) {
+                      flushListItems()
+                      elements.push(<p key={index} className="font-semibold">{line.replace(/\*\*/g, '')}</p>)
+                    } else if (line.startsWith('-')) {
+                      currentListItems.push(line.substring(1).trim())
+                    } else if (line === '---') {
+                      flushListItems()
+                      elements.push(<hr key={index} className="my-4" />)
+                    } else if (line.trim()) {
+                      flushListItems()
+                      elements.push(<p key={index} className="mb-2">{line}</p>)
+                    }
+                  })
+                  
+                  flushListItems() 
+                  return elements
+                })()}
               </div>
             </div>
             <Button onClick={onNext} className="w-full mt-4" size="lg">
