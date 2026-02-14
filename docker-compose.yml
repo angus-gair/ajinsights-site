@@ -1,0 +1,66 @@
+# =============================================================================
+# AJ Insights Site - Docker Compose Configuration
+# Deploys to: ajinsights.com.au and www.ajinsights.com.au
+# =============================================================================
+
+version: '3.8'
+
+services:
+  ajinsights-site:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ajinsights-site:latest
+    container_name: ajinsights-site
+    restart: unless-stopped
+    
+    # Environment variables
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=${DATABASE_URL}
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-https://ajinsights.com.au}
+    
+    # Expose port to Traefik only
+    expose:
+      - "3000"
+    
+    # Connect to existing postgres (external service)
+    external_links:
+      - postgres
+    
+    # Connect to homelab network for Traefik routing
+    networks:
+      - homelab_web
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    
+    # Traefik labels for routing
+    labels:
+      # Enable Traefik
+      - "traefik.enable=true"
+      
+      # HTTPS Router (primary)
+      - "traefik.http.routers.ajinsights-site.rule=Host(`ajinsights.com.au`) || Host(`www.ajinsights.com.au`)"
+      - "traefik.http.routers.ajinsights-site.entrypoints=websecure"
+      - "traefik.http.routers.ajinsights-site.tls=true"
+      - "traefik.http.routers.ajinsights-site.tls.certresolver=cloudflare"
+      
+      # Service configuration
+      - "traefik.http.services.ajinsights-site.loadbalancer.server.port=3000"
+      - "traefik.http.services.ajinsights-site.loadbalancer.healthcheck.path=/api/health"
+      - "traefik.http.services.ajinsights-site.loadbalancer.healthcheck.interval=30s"
+      - "traefik.http.services.ajinsights-site.loadbalancer.healthcheck.timeout=10s"
+      
+      # Network configuration
+      - "traefik.docker.network=homelab_web"
+
+# Use existing homelab network
+networks:
+  homelab_web:
+    external: true
