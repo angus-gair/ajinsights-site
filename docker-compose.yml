@@ -57,8 +57,7 @@ services:
       - "traefik.http.services.ajinsights-site.loadbalancer.healthcheck.interval=30s"
       - "traefik.http.services.ajinsights-site.loadbalancer.healthcheck.timeout=10s"
       
-      # Network configuration
-      - "traefik.docker.network=homelab_web"
+      # Network configuration (removed - let Traefik auto-detect)
 
 # Use existing homelab network
 networks:
